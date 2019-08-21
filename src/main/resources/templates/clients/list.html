@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<main class="container">
+	<div class="card bg-light my-5">
+		<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1></div>
+		<div class="card-body">
+			<p><a th:href="@{/clients/new}" class="text-primary ml-2">Añadir
+				cliente</a></p>
+			<table class="table table-striped">
+				<thead class="bg-dark text-light">
+					<tr>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Email</th>
+						<th>Fecha de creación</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="client: ${clients}">
+						<td th:text="${client.name}"></td>
+						<td th:text="${client.surname}"></td>
+						<td th:text="${client.email}"></td>
+						<td th:text="${client.createdAt}"></td>
+						<td>
+							<a th:href="@{/clients/edit/} + ${client.id}"><button class="btn btn-primary mr-3">Editar</button></a>
+							<a th:href="@{/clients/delete/} + ${client.id}"><button class="btn btn-danger">Eliminar</button></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<nav th:replace="layout/pagination :: pagination"></nav>
+		</div>
+	</div>
+
+	</main>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
