@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySources;
 
 @Configuration
 @PropertySources({
-	@PropertySource("classpath:texts.properties")
+	@PropertySource("classpath:text.properties")
 })
 public class MessagesConfig {
 	
