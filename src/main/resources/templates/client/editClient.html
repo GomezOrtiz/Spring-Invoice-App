@@ -11,21 +11,21 @@
 			<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1></div>
 			<div class="card-body">		
 				<form th:action="@{/clients/edit}" th:object="${client}" method="post">
-					<section class="form-group row">
+					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" for="name" th:text="#{forms.client.edit.name}"></label>
-						<article class="col-sm-6"><input type="text" th:field="*{name}" id="name" class="form-control" th:errorclass="'form control alert-danger'"/></article>	
+						<div class="col-sm-6"><input type="text" th:field="*{name}" id="name" class="form-control" th:errorclass="'form control alert-danger'"/></div>	
 						<small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form-text text-danger"></small>	
-					</section>
-					<section class="form-group row">
+					</div>
+					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" for="surname" th:text="#{forms.client.edit.surname}"></label>
-						<article class="col-sm-6"><input type="text" th:field="*{surname}" id="surname" class="form-control" th:errorclass="'form control alert-danger'"/></article>
+						<div class="col-sm-6"><input type="text" th:field="*{surname}" id="surname" class="form-control" th:errorclass="'form control alert-danger'"/></div>
 						<small th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" class="form-text text-danger"></small>	
-					</section>
-					<section class="form-group row">
+					</div>
+					<div class="form-group row">
 						<label class="col-sm-2 col-form-label" for="email" th:text="#{forms.client.edit.email}"></label>
-						<article class="col-sm-6"><input type="text" th:field="*{email}" id="email" class="form-control" th:errorclass="'form control alert-danger'"/></article>
+						<div class="col-sm-6"><input type="text" th:field="*{email}" id="email" class="form-control" th:errorclass="'form control alert-danger'"/></div>
 						<small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></small>		
-					</section>	
+					</div>	
 					<button type="submit" class="btn btn-primary" th:text="#{forms.client.edit.button.submit}"></button>
 				</form>
 			</div>

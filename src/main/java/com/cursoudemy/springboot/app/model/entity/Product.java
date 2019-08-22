@@ -1,4 +1,4 @@
-package com.cursoudemy.springboot.app.model;
+package com.cursoudemy.springboot.app.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,6 +31,10 @@ public class Product implements Serializable {
 	@Column(name="created_at")
 	private Date createdAt;
 	
+	@Temporal(value = TemporalType.DATE)
+	@Column(name="updated_at")
+	private Date updatedAt;
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = new Date();
@@ -66,6 +70,14 @@ public class Product implements Serializable {
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+	
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 }

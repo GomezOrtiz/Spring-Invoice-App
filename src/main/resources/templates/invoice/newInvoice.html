@@ -8,29 +8,35 @@
 	<main class="container">
 	
 		<div class="card bg-light my-5">
-			<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1></div>
+			<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1>
+			<a class="btn btn-light" th:href="@{${'/clients/' + invoice.client.id}}" th:utext="#{forms.invoice.add.back}"></a>
+			</div>
 			<div class="card-body">		
-				<form th:action="@{/invoices/${clientId}/new}" th:object="${invoice}" method="post">
-					<section class="form-group row">
-						<label class="col-sm-2 col-form-label" for="name" th:text="#{forms.invoice.add.id}"></label>
-						<article class="col-sm-6"><input type="text" th:field="*{name}" id="name" class="form-control" th:errorclass="'form control alert-danger'"/></article>	
-						<small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form-text text-danger"></small>	
-					</section>
-					<section class="form-group row">
-						<label class="col-sm-2 col-form-label" for="surname" th:text="#{forms.client.add.surname}"></label>
-						<article class="col-sm-6"><input type="text" th:field="*{surname}" id="surname" class="form-control" th:errorclass="'form control alert-danger'"/></article>
-						<small th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" class="form-text text-danger"></small>	
-					</section>
-					<section class="form-group row">
-						<label class="col-sm-2 col-form-label" for="email" th:text="#{forms.client.add.email}"></label>
-						<article class="col-sm-6"><input type="text" th:field="*{email}" id="email" class="form-control" th:errorclass="'form control alert-danger'"/></article>
-						<small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></small>		
-					</section>	
-					<button type="submit" class="btn btn-primary" th:text="#{forms.client.add.button.submit}"></button>
+				<form th:action="@{${'/invoices/' + invoice.client.id + '/new'}}" th:object="${invoice}" method="post">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="name" th:text="#{forms.invoice.add.client.name}"></label>
+						<div class="col-sm-6"><input type="text" id="name" class="form-control" th:value="${invoice.client.name + ' ' + invoice.client.surname}" disabled/></div>	
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="description" th:text="#{forms.invoice.add.description}"></label>
+						<div class="col-sm-6"><input type="text" th:field="*{description}" id="name" class="form-control" th:errorclass="'form control alert-danger'"/></div>	
+						<small th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="form-text text-danger"></small>	
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="details" th:text="#{forms.invoice.add.details}"></label>
+						<div class="col-sm-6"><textarea th:field="*{details}" id="details" class="form-control" th:errorclass="'form control alert-danger'"></textarea></div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="search" th:text="#{forms.invoice.add.search}"></label>
+						<div class="col-sm-6"><input type="text" id="search" class="form-control"/></div>	
+					</div>
+					<button type="submit" class="btn btn-secondary" th:text="#{forms.invoice.add.button.submit}"></button>
 				</form>
 			</div>
 		</div>
 	</main>
 	<footer th:replace="layout/layout :: footer"></footer>
+	<script th:replace="invoice/autocomplete :: autocomplete"></script>
 </body>
 </html>

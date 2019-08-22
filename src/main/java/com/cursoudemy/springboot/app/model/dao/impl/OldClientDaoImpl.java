@@ -1,4 +1,4 @@
-package com.cursoudemy.springboot.app.dao.impl;
+package com.cursoudemy.springboot.app.model.dao.impl;
 
 //import java.util.List;
 //

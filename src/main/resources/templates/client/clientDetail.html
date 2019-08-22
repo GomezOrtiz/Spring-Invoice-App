@@ -17,6 +17,7 @@
 					<li class="list-group-item" th:text="${client.createdAt}"></li>
 				</ul>
 				<div class="alert alert-info my-4" th:if="${#lists.isEmpty(client.invoices)}" th:text="#{client.detail.errors.invoice.not.found(${client.name + ' ' + client.surname})}"></div>			
+				<a th:href="@{${'/invoices/' + client.id + '/new'}}"><button class="btn btn-primary mt-4" th:text="#{client.detail.button.add.invoice}"></button></a>
 				<table th:if="${not #lists.isEmpty(client.invoices)}" class="table table-bordered table-striped my-4">
 					<thead class="thead-dark">
 						<tr>

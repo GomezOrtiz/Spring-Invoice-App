@@ -6,7 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.cursoudemy.springboot.app.model.Client;
+import com.cursoudemy.springboot.app.model.entity.Client;
 
 @Component
 public class ClientFormValidator implements Validator {

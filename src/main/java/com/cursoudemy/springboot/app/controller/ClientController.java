@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cursoudemy.springboot.app.model.Client;
+import com.cursoudemy.springboot.app.model.entity.Client;
 import com.cursoudemy.springboot.app.service.ClientService;
 import com.cursoudemy.springboot.app.utils.forms.ClientFormValidator;
 import com.cursoudemy.springboot.app.utils.pagination.Paginator;
@@ -119,7 +119,7 @@ public class ClientController {
 	 * Método que procesa el formulario para añadir un nuevo cliente
 	 */
 	@RequestMapping(value="/new", method=RequestMethod.POST)
-	public String create(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, Locale locale) {
+	public String create(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
 		
 		clientFormValidator.validate(client, result);
 
@@ -129,7 +129,8 @@ public class ClientController {
 		}
 		
 		clientService.create(client);
-		
+		status.setComplete();
+
 		redirect.addFlashAttribute(SUCCESS, messages.getMessage("client.list.add.success", null, locale));
 		
 		return REDIRECT_TO_LIST;

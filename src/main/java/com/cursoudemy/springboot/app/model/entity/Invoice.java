@@ -1,4 +1,4 @@
-package com.cursoudemy.springboot.app.model;
+package com.cursoudemy.springboot.app.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

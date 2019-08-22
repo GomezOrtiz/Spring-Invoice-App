@@ -10,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cursoudemy.springboot.app.dao.ClientDao;
-import com.cursoudemy.springboot.app.model.Client;
+import com.cursoudemy.springboot.app.model.dao.ClientDao;
+import com.cursoudemy.springboot.app.model.dao.ProductDao;
+import com.cursoudemy.springboot.app.model.entity.Client;
+import com.cursoudemy.springboot.app.model.entity.Product;
 import com.cursoudemy.springboot.app.service.ClientService;
 
 @Service
@@ -19,6 +21,9 @@ public class ClientServiceImpl implements ClientService {
 	
 	@Autowired
 	private ClientDao clientDao;
+	
+	@Autowired
+	private ProductDao productDao;
 
 	@Override
 	@Transactional(readOnly=true)
@@ -63,6 +68,12 @@ public class ClientServiceImpl implements ClientService {
 	@Transactional
 	public void delete(Long id) {
 		clientDao.deleteById(id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Product> findProductsByName(String query) {
+		return productDao.findByName(query);
 	}
 
 }
