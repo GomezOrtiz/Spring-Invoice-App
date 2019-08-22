@@ -34,7 +34,7 @@ public class ClientServiceImpl implements ClientService {
 
 		return clientDao.findAll(pageRequested);
 	}
-	
+
 	@Override
 	@Transactional(readOnly=true)
 	public Client findById(Long id) {

@@ -1,9 +1,10 @@
 package com.cursoudemy.springboot.app.controller;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +35,10 @@ import com.cursoudemy.springboot.app.utils.pagination.Paginator;
 public class ClientController {
 	
 	//Views
-	private static final String CLIENTS_LIST_VIEW = "clients/list";
-	private static final String NEW_CLIENT_FORM_VIEW = "clients/new";
-	private static final String EDIT_CLIENT_FORM_VIEW = "clients/edit";
+	private static final String CLIENTS_LIST_VIEW = "client/clientList";
+	private static final String CLIENT_DETAIL_VIEW = "client/clientDetail";
+	private static final String NEW_CLIENT_FORM_VIEW = "client/newClient";
+	private static final String EDIT_CLIENT_FORM_VIEW = "client/editClient";
 	
 	//Redirections
 	private static final String REDIRECT_TO_LIST = "redirect:/clients";
@@ -45,25 +47,14 @@ public class ClientController {
 	private static final String TITLE = "title";
 	private static final String CLIENT = "client";
 	private static final String CLIENTS = "clients";
+//	private static final String INVOICES = "invoices";
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
 	private static final int MAX_RESULTS_PER_PAGE = 6;
 	
 	//Messages
-	@Value("${clients.list.title}")
-	private String listTitle;
-	@Value("${clients.add.title}")
-	private String addTitle;
-	@Value("${clients.edit.title}")
-	private String editTitle;
-	@Value("${clients.error.not.found}")
-	private String notFound;
-	@Value("${clients.add.success}")
-	private String addSuccess;
-	@Value("${clients.edit.success}")
-	private String editSuccess;
-	@Value("${clients.delete.success}")
-	private String deleteSuccess;
+	@Autowired
+	private MessageSource messages;
 	
 	//Beans
 	@Autowired
@@ -76,12 +67,12 @@ public class ClientController {
 	 * Método que muestra el listado de clientes (con paginación)
 	 */
 	@RequestMapping(value= {"/", "", "/list"}, method=RequestMethod.GET)
-	public String listClients(@RequestParam(name="page", defaultValue="0") int page, Model model) {
+	public String list(@RequestParam(name="page", defaultValue="0") int page, Model model, Locale locale) {
 				
 		Page<Client> clients = clientService.getClientsByPage(page, MAX_RESULTS_PER_PAGE);
 		Paginator<Client> paginator = new Paginator<>("/clients", clients);
 				
-		model.addAttribute(TITLE, listTitle);
+		model.addAttribute(TITLE, messages.getMessage("client.list.title", null, locale));
 		model.addAttribute(CLIENTS, clients);
 		model.addAttribute("page", paginator);
 		
@@ -89,14 +80,36 @@ public class ClientController {
 	}
 	
 	/**
+	 * Método que muestra el detalle de un cliente
+	 */
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public String detail(@PathVariable("id") Long id, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect, Locale locale) {
+		
+		if(null != clientService.findById(id)) {
+			Client client = clientService.findById(id);
+			
+//			Page<Invoice> invoices = invoiceService.getInvoicesByClientAndPage(page, MAX_RESULTS_PER_PAGE);
+//			Paginator<Invoice> paginator = new Paginator<>("/clients/{id}/invoices", invoices);
+			
+			model.addAttribute(CLIENT, client);
+//			model.addAttribute(INVOICES, invoices);
+			model.addAttribute(TITLE, messages.getMessage("client.detail.title", null, locale));
+			return CLIENT_DETAIL_VIEW;
+		} else {
+			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.not.found", null, locale));
+			return REDIRECT_TO_LIST;
+		}		
+	}
+	
+	/**
 	 * Método que muestra el formulario para añadir un nuevo cliente
 	 */
 	@RequestMapping(value="/new", method=RequestMethod.GET)
-	public String createForm(Map<String, Object> model) {
+	public String create(Map<String, Object> model, Locale locale) {
 		
 		Client client = new Client();
 		
-		model.put(TITLE, addTitle);
+		model.put(TITLE, messages.getMessage("forms.client.add.title", null, locale));
 		model.put(CLIENT, client);
 		
 		return NEW_CLIENT_FORM_VIEW;
@@ -106,18 +119,18 @@ public class ClientController {
 	 * Método que procesa el formulario para añadir un nuevo cliente
 	 */
 	@RequestMapping(value="/new", method=RequestMethod.POST)
-	public String create(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect) {
+	public String create(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, Locale locale) {
 		
 		clientFormValidator.validate(client, result);
 
 		if (result.hasErrors()) {
-			model.addAttribute(TITLE, addTitle);
+			model.addAttribute(TITLE, messages.getMessage("forms.client.add.title", null, locale));
 			return NEW_CLIENT_FORM_VIEW;
 		}
 		
 		clientService.create(client);
 		
-		redirect.addFlashAttribute(SUCCESS, addSuccess);
+		redirect.addFlashAttribute(SUCCESS, messages.getMessage("client.list.add.success", null, locale));
 		
 		return REDIRECT_TO_LIST;
 		
@@ -127,15 +140,15 @@ public class ClientController {
 	 * Método que muestra el formulario para editar un cliente
 	 */
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
-	public String update(@PathVariable("id") Long id, Map<String, Object> model, RedirectAttributes redirect) {
+	public String update(@PathVariable("id") Long id, Map<String, Object> model, RedirectAttributes redirect, Locale locale) {
 				
 		if(null != clientService.findById(id)) {
 			Client client = clientService.findById(id);
 			model.put(CLIENT, client);
-			model.put(TITLE, editTitle);
+			model.put(TITLE, messages.getMessage("forms.client.edit.title", null, locale));
 			return EDIT_CLIENT_FORM_VIEW;
 		} else {
-			redirect.addFlashAttribute(ERROR, notFound);
+			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.not.found", null, locale));
 			return REDIRECT_TO_LIST;
 		}
 	}
@@ -144,19 +157,19 @@ public class ClientController {
 	 * Método que procesa el formulario para editar un cliente
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String update(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
+	public String update(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
 			
 		clientFormValidator.validate(client, result);
 
 		if (result.hasErrors()) {	
-			model.addAttribute(TITLE, editTitle);
+			model.addAttribute(TITLE, messages.getMessage("forms.client.edit.title", null, locale));
 			return EDIT_CLIENT_FORM_VIEW;
 		}
 		
 		clientService.update(client);
 		status.setComplete();
 		
-		redirect.addFlashAttribute(SUCCESS, editSuccess);
+		redirect.addFlashAttribute(SUCCESS, messages.getMessage("client.list.edit.success", null, locale));
 		
 		return REDIRECT_TO_LIST;
 	}
@@ -165,13 +178,13 @@ public class ClientController {
 	 * Método que elimina un cliente
 	 */
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
-	public String delete(@PathVariable("id") Long id, RedirectAttributes redirect) {
+	public String delete(@PathVariable("id") Long id, RedirectAttributes redirect, Locale locale) {
 		
 		if(null != clientService.findById(id)) {
 			clientService.delete(id);
-			redirect.addFlashAttribute(SUCCESS, deleteSuccess);
+			redirect.addFlashAttribute(SUCCESS, messages.getMessage("client.list.delete.success", null, locale));
 		} else {
-			redirect.addFlashAttribute(ERROR, notFound);
+			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.not.found", null, locale));
 		}
 		
 		return REDIRECT_TO_LIST;

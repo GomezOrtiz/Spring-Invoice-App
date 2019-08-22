@@ -1,6 +1,7 @@
 package com.cursoudemy.springboot.app.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class Invoice implements Serializable {
 	@Column(name="created_at")
 	private Date createdAt;
 	
+	public Invoice() {
+		items = new ArrayList<InvoiceItem>();
+	}
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = new Date();
@@ -101,7 +106,7 @@ public class Invoice implements Serializable {
 		items.add(item);
 	}
 	
-	public Double getTotal (List<InvoiceItem> items) {
+	public Double getTotal () {
 		Double total = 0.0;
 		
 		for (int i = 0; i < items.size(); i++) {

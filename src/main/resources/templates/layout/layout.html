@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
 <meta charset="UTF-8" />
-<title th:text="'Facturación Fake Corp. - ' + ${title}"></title>
+<title th:text="#{layout.head.app.name} + ' ' + ${title}"></title>
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 	
 	<header th:fragment="header">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" th:href="@{/}">Fake Corp.</a>
+			<a class="navbar-brand" th:href="@{/}" th:text="#{layout.header.company.name}"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNav" aria-controls="navbarNav"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link"
-						th:href="@{/clients}">Clientes</a></li>
+						th:href="@{/clients}" th:text="#{layout.header.clients}"></a></li>
 				</ul>
 			</div>
 		</nav>
@@ -33,7 +33,7 @@
 	
 	<footer th:fragment="footer" class="container mt-3">
 	<hr />
-	<small>Proyecto para aprender a utilizar SpringBoot, Spring MVC y JPA con MySQL</small>
+	<small th:text="#{layout.footer.description}"></small>
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

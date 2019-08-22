@@ -9,15 +9,14 @@
 	<div class="card bg-light my-5">
 		<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1></div>
 		<div class="card-body">
-			<p><a th:href="@{/clients/new}" class="text-primary ml-2">Añadir
-				cliente</a></p>
+			<p><a th:href="@{/clients/new}" class="text-primary ml-2" th:text="#{client.list.button.add}"></a></p>
 			<table class="table table-striped">
 				<thead class="bg-dark text-light">
 					<tr>
-						<th>Nombre</th>
-						<th>Apellido</th>
-						<th>Email</th>
-						<th>Fecha de creación</th>
+						<th th:text="#{client.list.name}"></th>
+						<th th:text="#{client.list.surname}"></th>
+						<th th:text="#{client.list.email}"></th>
+						<th th:text="#{client.list.created.at}"></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -28,8 +27,9 @@
 						<td th:text="${client.email}"></td>
 						<td th:text="${client.createdAt}"></td>
 						<td>
-							<a th:href="@{/clients/edit/} + ${client.id}"><button class="btn btn-primary mr-3">Editar</button></a>
-							<a th:href="@{/clients/delete/} + ${client.id}"><button class="btn btn-danger">Eliminar</button></a>
+							<a th:href="@{/clients/} + ${client.id}"><button class="btn btn-success mr-3"  th:text="#{client.list.button.detail}"></button></a>
+							<a th:href="@{/clients/edit/} + ${client.id}"><button class="btn btn-primary mr-3"  th:text="#{client.list.button.edit}"></button></a>
+							<a th:href="@{/clients/delete/} + ${client.id}"><button class="btn btn-danger" th:text="#{client.list.button.delete}"></button></a>
 						</td>
 					</tr>
 				</tbody>

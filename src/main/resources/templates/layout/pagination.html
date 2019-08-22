@@ -6,19 +6,19 @@
 	<nav th:fragment="pagination">
 		<ul class="pagination">
 			<li th:class="${page.first} ? 'page-item disabled' : 'page-item'">
-				<a th:href="@{${page.url}(page=0)}" class="page-link">Primera</a>
+				<a th:href="@{${page.url}(page=0)}" class="page-link" th:text="#{layout.pagination.first}"></a>
 			</li>
 			<li th:class="${page.hasPrevious()} ? 'page-item' : 'page-item disabled'">
-				<a th:href="@{${page.url}(page=${page.currentPage - 2})}" class="page-link">Anterior</a>
+				<a th:href="@{${page.url}(page=${page.currentPage - 2})}" class="page-link" th:text="#{layout.pagination.previous}"></a>
 			</li>
 			<li th:each="item: ${page.pages}" th:class="${item.current} ? 'page-item disabled' : 'page-item'">
 				<a th:href="@{${page.url}(page=${item.num - 1})}" th:text="${item.num}" class="page-link"></a>
 			</li>
 			<li th:class="${page.hasNext()} ? 'page-item' : 'page-item disabled'">
-				<a th:href="@{${page.url}(page=${page.currentPage})}" class="page-link">Siguiente</a>
+				<a th:href="@{${page.url}(page=${page.currentPage})}" class="page-link" th:text="#{layout.pagination.next}"></a>
 			</li>
 			<li th:class="${page.last} ? 'page-item disabled' : 'page-item'">
-				<a th:href="@{${page.url}(page=${page.totalPages - 1})}" class="page-link">Última</a>
+				<a th:href="@{${page.url}(page=${page.totalPages - 1})}" class="page-link" th:text="#{layout.pagination.last}"></a>
 			</li>
 		</ul>
 	</nav>

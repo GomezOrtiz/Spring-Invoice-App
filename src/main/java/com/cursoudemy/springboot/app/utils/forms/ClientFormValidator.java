@@ -30,25 +30,25 @@ public class ClientFormValidator implements Validator {
 	
 	private void validateNameAndSurname(Errors errors, Client client) {
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, NAME, "forms.errors.client.name.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, NAME, "forms.client.errors.name.empty");
 
 		if (client.getName().length() > 50) {
-			errors.rejectValue(NAME, "forms.errors.client.name.invalid");
+			errors.rejectValue(NAME, "forms.client.errors.name.invalid");
 		}
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, SURNAME, "forms.errors.client.surname.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, SURNAME, "forms.client.errors.surname.empty");
 
 		if (client.getSurname().length() > 50) {
-			errors.rejectValue(SURNAME, "forms.errors.client.surname.invalid");
+			errors.rejectValue(SURNAME, "forms.client.errors.surname.invalid");
 		}
 	}
 	
 	private void validateEmail(Errors errors, Client client) {
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, EMAIL, "forms.errors.client.email.empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, EMAIL, "forms.client.errors.email.empty");
 
 		if (!emailValidator.validate(client.getEmail())) {
-			errors.rejectValue(EMAIL, "forms.errors.client.email.invalid");
+			errors.rejectValue(EMAIL, "forms.client.errors.email.invalid");
 		} 
 	}
 
