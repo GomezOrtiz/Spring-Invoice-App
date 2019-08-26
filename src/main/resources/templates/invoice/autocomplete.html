@@ -17,7 +17,13 @@
 						term: request.term
 					},
 					success: data => {
-						response($.map(data,(item) => {value: item.id, label:item.nombre, precio:item.precio}))
+						response($.map(data, item => {
+							return {
+								value: item.id, 
+								label:item.name, 
+								precio:item.price
+							}
+						}))							
 					}
 				})
 			},

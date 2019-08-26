@@ -5,7 +5,7 @@ INSERT INTO clients (name, surname, email, created_at) VALUES ('Lucía', 'Astray
 INSERT INTO clients (name, surname, email, created_at) VALUES ('Alfonso', 'Cerezuela', 'fons@gmail.com', '2019-07-15');
 INSERT INTO clients (name, surname, email, created_at) VALUES ('Enrique', 'Álvarez de Toledo', 'henry@gmail.com', '2019-07-15');
 INSERT INTO clients (name, surname, email, created_at) VALUES ('José Luis', 'Avilés', 'peplu@gmail.com', '2019-07-15');
-INSERT INTO clients (name, surname, email, created_at) VALUES ('Andres', 'Guzman', 'profesor@bolsadeideas.com', '2017-08-01');
+INSERT INTO clients (name, surname, email, created_at) VALUES ('Carlos', 'Martínez', 'carlos@gmail.com', '2015-05-04');
 INSERT INTO clients (name, surname, email, created_at) VALUES ('John', 'Doe', 'john.doe@gmail.com', '2017-08-02');
 INSERT INTO clients (name, surname, email, created_at) VALUES ('Linus', 'Torvalds', 'linus.torvalds@gmail.com', '2017-08-03');
 INSERT INTO clients (name, surname, email, created_at) VALUES ('Jane', 'Doe', 'jane.doe@gmail.com', '2017-08-04');
