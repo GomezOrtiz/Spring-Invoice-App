@@ -58,16 +58,18 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	@Transactional
 	public void update(Client client) {
-		
-		client.setUpdatedAt(new Date());
-
-		clientDao.save(client);
+		if(!clientDao.findById(client.getId()).isEmpty()) {
+			client.setUpdatedAt(new Date());
+			clientDao.save(client);
+		}
 	}
 
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		clientDao.deleteById(id);
+		if(!clientDao.findById(id).isEmpty()) {
+			clientDao.deleteById(id);
+		}
 	}
 
 	@Override

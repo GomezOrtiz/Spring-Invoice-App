@@ -47,6 +47,12 @@ public class Client implements Serializable {
 	public Client() {
 		invoices = new ArrayList<Invoice>();
 	}
+	
+	public Client(String name, String surname, String email) {
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+	}
 
 	public Long getId() {
 		return id;
