@@ -32,24 +32,68 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void create(Product product) {
-		
 		product.setCreatedAt(new Date());
-
 		productDao.save(product);
 	}
 	
 	@Override
+	@Transactional
+	public void create(List<Product> products) {
+		for (Product product : products) {
+			product.setCreatedAt(new Date());
+		}
+		productDao.saveAll(products);
+	}
+	
+	@Override
+	@Transactional
 	public void update(Product product) {
-		
-		product.setUpdatedAt(new Date());
-
-		productDao.save(product);		
+		if(null != findById(product.getId())) {
+			product.setUpdatedAt(new Date());
+			productDao.save(product);	
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void changeName(Long id, String name) {
+		if(null != findById(id)) {
+			Product foundProduct = findById(id);
+			foundProduct.setName(name);
+			foundProduct.setUpdatedAt(new Date());
+			update(foundProduct);
+		} else {
+			throw new IllegalArgumentException("No existe ningún producto con esa ID");
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void changePrice(Long id, Double price) {
+		if(null != findById(id)) {
+			Product foundProduct = findById(id);
+			foundProduct.setPrice(price);
+			foundProduct.setUpdatedAt(new Date());
+			update(foundProduct);
+		} else {
+			throw new IllegalArgumentException("No existe ningún producto con esa ID");
+		}
 	}
 	
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		productDao.deleteById(id);
+		if(null != findById(id)) {
+			productDao.deleteById(id);
+		} else {
+			throw new IllegalArgumentException("No existe ningún producto con esa ID");
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void deleteAll() {
+		productDao.deleteAll();
 	}
 
 	@Override

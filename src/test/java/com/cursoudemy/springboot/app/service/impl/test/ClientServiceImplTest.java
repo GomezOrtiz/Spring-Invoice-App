@@ -1,26 +1,21 @@
 package com.cursoudemy.springboot.app.service.impl.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import com.cursoudemy.springboot.app.SpringBootDataJpaApplication;
 import com.cursoudemy.springboot.app.model.entity.Client;
 import com.cursoudemy.springboot.app.service.ClientService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = SpringBootDataJpaApplication.class)
+@SpringBootTest
 public class ClientServiceImplTest {
 	
 	@Autowired
@@ -35,7 +30,6 @@ public class ClientServiceImplTest {
 			add(new Client("David", "Gómez", "dagor@gmail.com")); 
 			add(new Client("Lucía", "Astray", "lulas@gmail.com"));
 			add(new Client("Alfonso", "Cerezuela", "fons@gmail.com"));
-			add(new Client("Alfonso", "Cerezuela", "fons@gmail.com"));
 			add(new Client("Enrique", "Álvarez de Toledo", "henry@gmail.com"));
 			add(new Client("José Luis", "Avilés", "peplu@gmail.com"));
 			}};
@@ -45,10 +39,10 @@ public class ClientServiceImplTest {
 		
 		
 		//THEN
-		assertNotNull("Debería haber encontrado algún cliente", result);
-        assertThat(result).hasSize(5);
-        assertEquals("El nombre del primer cliente debería ser el esperado", result.get(0).getName(),expected.get(0).getName());
-        assertEquals("El nombre del último cliente debería ser el esperado", result.get(result.size() -1).getName(),expected.get(expected.size() -1).getName());
+		assertNotNull(result, "Debería haber encontrado algún cliente");
+		assertEquals(5, result.size(), "El número de clientes debería ser el esperado");
+        assertEquals(expected.get(0).getName(), result.get(0).getName(), "El nombre del primer cliente debería ser el esperado");
+        assertEquals(expected.get(expected.size() -1).getName(), result.get(result.size() -1).getName(), "El nombre del último cliente debería ser el esperado");
 	}
 	
 	@Test
@@ -62,8 +56,8 @@ public class ClientServiceImplTest {
 		Client result = clientService.findById(id);
 		
 		//THEN
-		assertNotNull("Debería haber encontrado un cliente", result);
-		assertEquals("El nombre del cliente debería ser el esperado", result.getName(), expected.getName());
+		assertNotNull(result, "Debería haber encontrado un cliente");
+		assertEquals(expected.getName(), result.getName(), "El nombre del cliente debería ser el esperado");
 	}
 	
 	@Test 
@@ -76,7 +70,7 @@ public class ClientServiceImplTest {
 		Client result = clientService.findById(id);
 		
 		//THEN
-		assertNull("No debe encontrar cliente por una ID que no existe", result);
+		assertNull(result, "No debe encontrar cliente por una ID que no existe");
 	}
 	
 	@Test
@@ -90,9 +84,9 @@ public class ClientServiceImplTest {
 		List<Client> result = clientService.findAll();
 		
 		//THEN
-        assertThat(result).hasSize(6);
-        assertEquals("El nombre del último cliente debería ser el esperado", result.get(result.size() -1).getName(), newClient.getName());
-        assertNotNull("La fecha de creación no debería estar vacía", result.get(result.size() -1).getCreatedAt());
+		assertEquals(6, result.size(), "El número de clientes debería ser el esperado");
+        assertEquals(newClient.getName(), result.get(result.size() -1).getName(), "El nombre del último cliente debería ser el esperado");
+        assertNotNull(result.get(result.size() -1).getCreatedAt(), "La fecha de creación no debería estar vacía");
 	}
 	
 	@Test
@@ -109,11 +103,14 @@ public class ClientServiceImplTest {
 		Client updatedClient = clientService.findById(id);
 		
 		//THEN
-		assertNotEquals("El nombre del cliente debería haber cambiado", oldClient.getName(), updatedClient.getName());
-		assertNotEquals("El apellido del cliente debería haber cambiado", oldClient.getSurname(), updatedClient.getSurname());
-		assertNotEquals("El email del cliente debería haber cambiado", oldClient.getEmail(), updatedClient.getEmail());
-        assertNull("La fecha de actualización debería estar vacía antes del cambio", oldClient.getUpdatedAt());
-        assertNotNull("La fecha de actualización no debería estar vacía después del cambio", updatedClient.getUpdatedAt());
+		assertNotEquals(updatedClient.getName(), oldClient.getName(), "El nombre del cliente debería haber cambiado");
+		assertNotEquals(updatedClient.getSurname(), oldClient.getSurname(), "El apellido del cliente debería haber cambiado");
+		assertNotEquals(updatedClient.getEmail(), oldClient.getEmail(), "El email del cliente debería haber cambiado");
+		assertEquals(newClient.getName(), updatedClient.getName(), "El nombre del cliente debería ser el esperado");
+		assertEquals(newClient.getSurname(), updatedClient.getSurname(), "El apellido del cliente debería ser el esperado");
+		assertEquals(newClient.getEmail(), updatedClient.getEmail(), "El email del cliente debería ser el esperado");
+        assertNull(oldClient.getUpdatedAt(), "La fecha de actualización debería estar vacía antes del cambio");
+        assertNotNull(updatedClient.getUpdatedAt(), "La fecha de actualización no debería estar vacía después del cambio");
 	}
 	
 	@Test 
@@ -132,9 +129,9 @@ public class ClientServiceImplTest {
 		Client updatedClient = clientService.findById(id);		
 		
 		//THEN
-		assertNull("El cliente no debe existir antes del update", oldClient);
-		assertNull("El cliente no debe existir después del update", updatedClient);
-		assertEquals("No debe haber creado el cliente", oldSize, clientService.findAll().size());
+		assertNull(oldClient, "El cliente no debe existir antes del update");
+		assertNull(updatedClient, "El cliente no debe existir después del update");
+		assertEquals(oldSize, clientService.findAll().size(), "No debe haber creado el cliente");
 	}
 	
 	@Test
@@ -150,10 +147,12 @@ public class ClientServiceImplTest {
 		List<Client> result = clientService.findAll();
 		
 		//THEN
-        assertThat(result).hasSize(5);
-        assertEquals("El nombre del cliente antes de ser borrado debería ser el esperado", beforeDeleted.getName(), "Carlos");
-        assertEquals("El nombre del último cliente tras la eliminación debería ser el esperado", result.get(result.size() -1).getName(), expected.getName());
-        assertNull("No debería encontrar el cliente borrado", clientService.findById(id));
+		assertEquals(5, result.size(), "El número de clientes debería ser el esperado");
+        assertEquals("Carlos", beforeDeleted.getName(), "El nombre del cliente antes de ser borrado debería ser el esperado");
+        assertEquals(expected.getName(), result.get(result.size() -1).getName(), "El nombre del último cliente tras la eliminación debería ser el esperado");
+        assertNull(clientService.findById(id), "No debería encontrar el cliente borrado");
+        
+        clientService.create(beforeDeleted);
 	}
 	
 	@Test 
@@ -167,7 +166,7 @@ public class ClientServiceImplTest {
 		clientService.delete(id);
 		
 		//THEN
-		assertEquals("El número de clientes no debe haber cambiado", oldSize, clientService.findAll().size());
+		assertEquals(oldSize, clientService.findAll().size(), "El número de clientes no debe haber cambiado");
 	}
 
 }

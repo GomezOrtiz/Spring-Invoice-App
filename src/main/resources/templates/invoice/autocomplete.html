@@ -20,19 +20,53 @@
 						response($.map(data, item => {
 							return {
 								value: item.id, 
-								label:item.name, 
-								precio:item.price
+								label: item.name, 
+								price: item.price
 							}
 						}))							
 					}
 				})
 			},
 			select: (event,ui) => {
-				$("#search").val(ui.item.label)
-				return false
+				
+				if(alreadyExists(ui.item.value)){
+					increaseAmount(ui.item.value, ui.item.price)
+					return
+				}
+				
+				let line = $("#invoiceItems").html()
+				
+				line = line.replace(/{ID}/g, ui.item.value)
+				line = line.replace(/{NAME}/g, ui.item.label)
+				line = line.replace(/{PRICE}/g, ui.item.price)
+				
+				$("#invoiceItemsTable tbody").append(line)
+				getTotal(ui.item.value, ui.item.price, 1)
+								
+				return
 			}
 		})
 	})	
+	
+	let getTotal = (id, price, amount) => {
+		$("#total_" + id).html(parseInt(price) * parseInt(amount))
+	} 
+	
+	let alreadyExists = id => {
+		let result = false
+		$("input[name='itemId[]']").each((index,element) => {
+			if(parseInt(id) === parseInt($(element).val())) {
+				result = true
+			}
+		})
+		return result
+	}
+	
+	let increaseAmount = (id, price) => {
+		let amount = $("#amount_" + id).val() ? parseInt($("#amount_" + id).val()) : 0;
+		$("#amount_" + id).val(amount++)
+		getTotal(id,price,amount)
+	}
 	
 </script>
 

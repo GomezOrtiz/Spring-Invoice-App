@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cursoudemy.springboot.app.model.dao.ClientDao;
-import com.cursoudemy.springboot.app.model.dao.ProductDao;
 import com.cursoudemy.springboot.app.model.entity.Client;
-import com.cursoudemy.springboot.app.model.entity.Product;
 import com.cursoudemy.springboot.app.service.ClientService;
 
 @Service
@@ -21,9 +19,6 @@ public class ClientServiceImpl implements ClientService {
 	
 	@Autowired
 	private ClientDao clientDao;
-	
-	@Autowired
-	private ProductDao productDao;
 
 	@Override
 	@Transactional(readOnly=true)
@@ -34,9 +29,7 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	@Transactional(readOnly=true)
 	public Page<Client> getClientsByPage(int numPage, int maxPages) {
-		
 		Pageable pageRequested = PageRequest.of(numPage, maxPages);
-
 		return clientDao.findAll(pageRequested);
 	}
 
@@ -49,9 +42,7 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	@Transactional
 	public void create(Client client) {
-		
 		client.setCreatedAt(new Date());
-
 		clientDao.save(client);
 	}
 		
@@ -71,11 +62,4 @@ public class ClientServiceImpl implements ClientService {
 			clientDao.deleteById(id);
 		}
 	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public List<Product> findProductsByName(String query) {
-		return productDao.findByName(query);
-	}
-
 }

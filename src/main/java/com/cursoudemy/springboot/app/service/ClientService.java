@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.cursoudemy.springboot.app.model.entity.Client;
-import com.cursoudemy.springboot.app.model.entity.Product;
 
 public interface ClientService {
 	
@@ -20,7 +19,4 @@ public interface ClientService {
 	public void update(Client client);
 	
 	public void delete(Long id);
-	
-	public List<Product> findProductsByName(String query);
-
 }

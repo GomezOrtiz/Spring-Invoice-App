@@ -31,6 +31,18 @@
 						<label class="col-sm-2 col-form-label" for="search" th:text="#{forms.invoice.add.search}"></label>
 						<div class="col-sm-6"><input type="text" id="search" class="form-control"/></div>	
 					</div>
+					<table th:replace="invoice/invoiceItem :: invoiceItem"></table>
+					<table id="invoiceItemsTable" class="table table-sm table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Price</th>
+								<th>Amount</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
 					<button type="submit" class="btn btn-secondary" th:text="#{forms.invoice.add.button.submit}"></button>
 				</form>
 			</div>

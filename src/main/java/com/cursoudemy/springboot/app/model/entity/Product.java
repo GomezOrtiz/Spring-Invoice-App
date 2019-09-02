@@ -34,7 +34,16 @@ public class Product implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	@Column(name="updated_at")
 	private Date updatedAt;
-
+	
+	public Product () {
+		
+	}
+	
+	public Product (String name, Double price) {
+		this.name = name;
+		this.price = price;
+	}
+	
 	@PrePersist
 	public void prePersist() {
 		createdAt = new Date();

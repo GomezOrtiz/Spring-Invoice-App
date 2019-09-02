@@ -14,7 +14,15 @@ public interface ProductService {
 	
 	public void create(Product product);
 	
-	public void update(Product product);
+	public void create(List<Product> products);
 	
-	public void delete(Long id);
+	public void update(Product product);
+
+	public void changeName(Long id, String name) throws Exception;
+
+	public void changePrice(Long id, Double price) throws Exception;
+	
+	public void delete(Long id) throws Exception;
+
+	public void deleteAll();
 }

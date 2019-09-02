@@ -89,7 +89,7 @@ public class ClientController {
 			Client client = clientService.findById(id);
 			
 //			Page<Invoice> invoices = invoiceService.getInvoicesByClientAndPage(page, MAX_RESULTS_PER_PAGE);
-//			Paginator<Invoice> paginator = new Paginator<>("/clients/{id}/invoices", invoices);
+//			Paginator<Invoice> paginator = new Paginator<>("/clients/{id}", invoices);
 			
 			model.addAttribute(CLIENT, client);
 //			model.addAttribute(INVOICES, invoices);

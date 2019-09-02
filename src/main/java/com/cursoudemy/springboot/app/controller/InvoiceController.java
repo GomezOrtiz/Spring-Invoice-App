@@ -104,8 +104,8 @@ public class InvoiceController {
 	/**
 	 * Devuelve en formato JSON un producto de la BBDD que coincida con la búsqueda
 	 */
-	@RequestMapping(value="/load-products/{query}", produces={"application/json"}, method=RequestMethod.GET)
-	public @ResponseBody List<Product> loadProducts(@PathVariable("query") String query) {
-		return productService.findByName(query);
+	@RequestMapping(value="/load-products/{term}", produces={"application/json"}, method=RequestMethod.GET)
+	public @ResponseBody List<Product> loadProducts(@PathVariable("term") String term) {
+		return productService.findByName(term);
 	}
 }
