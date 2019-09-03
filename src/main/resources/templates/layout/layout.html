@@ -28,21 +28,21 @@
 			</div>
 		</nav>
 
-		<section class="alert alert-success" th:if="${null != success}"
+		<section class="alert alert-green" th:if="${null != success}"
 			th:text="${success}"></section>
-		<section class="alert alert-danger" th:if="${null != error}"
+		<section class="alert alert-red" th:if="${null != error}"
 			th:text="${error}"></section>
-		<section class="alert alert-warning" th:if="${null != warning}"
+		<section class="alert alert-orange" th:if="${null != warning}"
 			th:text="${warning}"></section>
-		<section class="alert alert-info" th:if="${null != info}"
+		<section class="alert alert-main" th:if="${null != info}"
 			th:text="${info}"></section>
 	</header>
 
 	<main class="container"></main>
 
-	<footer th:fragment="footer" class="container mt-3">
+	<footer th:fragment="footer" class="container my-3">
 		<hr />
-		<small th:text="#{layout.footer.description}"></small>
+		<small th:text="#{layout.footer.description}" class="txt-dark font-weight-bold"></small>
 
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"
 			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="

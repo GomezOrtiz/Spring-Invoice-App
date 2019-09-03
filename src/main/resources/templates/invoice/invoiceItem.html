@@ -10,7 +10,7 @@
 			<td>{PRICE}</td>
 			<td><input type="number" value="1" name="amount[]" id="amount_{ID}" onchange="getTotal({ID},{PRICE},this.value)" class="form-control col-sm-4" /></td>
 			<td><span id="total_{ID}">0</span></td>
-			<td><a href="#" class="btn btn-danger btn-xs" onclick="deleteInvoiceItem({ID})">X</a></td>
+			<td><a href="#" class="btn btn-red btn-xs" onclick="deleteInvoiceItem({ID})">X</a></td>
 		</tr>
 	</tbody>
 </table>

@@ -5,10 +5,10 @@
 
 	<header th:replace="layout/layout :: header"></header>
 
-	<main class="container py-4">
+	<main class="container">
 	
-		<div class="card bg-light">
-			<div class="card-header"><h1 th:text="${title + ' ' + invoice.id}" class="text-secondary my-3"></h1>
+		<div class="card bdr-main my-5">
+			<div class="card-header"><h1 th:text="${title + ' ' + invoice.id}" class="h2 txt-dark my-3"></h1>
 				<a class="btn btn-light" th:href="@{${'/clients/' + invoice.client.id}}" th:utext="#{invoice.detail.back}"></a>
 			</div>
 			<div class="card-body border">
@@ -20,7 +20,7 @@
 					<li class="list-group-item" th:text="#{invoice.detail.createdAt(${invoice.createdAt})}"></li>
 				</ul>
 				<table th:if="${not #lists.isEmpty(invoice.items)}" class="table table-bordered table-striped my-4">
-					<thead class="thead-dark">
+					<thead class="bg-second text-light">
 						<tr>
 							<th th:text="#{invoice.detail.item.name}"></th>
 							<th th:text="#{invoice.detail.item.price}"></th>

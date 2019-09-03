@@ -16,7 +16,7 @@
 					<li class="list-group-item" th:text="${client.email}"></li>
 					<li class="list-group-item" th:text="${client.createdAt}"></li>
 				</ul>
-				<div class="alert alert-info my-4" th:if="${#lists.isEmpty(client.invoices)}" th:text="#{client.detail.errors.invoice.not.found(${client.name + ' ' + client.surname})}"></div>			
+				<div class="alert alert-main my-4" th:if="${#lists.isEmpty(client.invoices)}" th:text="#{client.detail.errors.invoice.not.found(${client.name + ' ' + client.surname})}"></div>			
 				<a th:href="@{${'/invoices/' + client.id + '/new'}}"><button class="btn btn-orange mt-4" th:text="#{client.detail.button.add.invoice}"></button></a>
 				<table th:if="${not #lists.isEmpty(client.invoices)}" class="table table-bordered table-striped my-4">
 					<thead class="bg-second text-light">
@@ -30,7 +30,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="invoice: ${client.invoices}">
-							<td class="badge btn-orange margin mt-1 ml-4"><a th:href="@{${'/invoices/' + invoice.id}}"><span class="text-light" th:text="${invoice.id}"></span></a></td>
+							<td class="badge btn-main margin mt-1 ml-4"><a th:href="@{${'/invoices/' + invoice.id}}"><span class="text-light" th:text="${invoice.id}"></span></a></td>
 							<td th:text="${invoice.description}"></td>
 							<td th:text="${invoice.details}"></td>
 							<td th:text="${invoice.createdAt}"></td>

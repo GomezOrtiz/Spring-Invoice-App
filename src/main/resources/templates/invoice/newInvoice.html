@@ -7,8 +7,8 @@
 
 	<main class="container">
 	
-		<div class="card bg-light my-5">
-			<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1>
+		<div class="card bdr-main my-5">
+			<div class="card-header bdr-main"><h1 th:text="${title}" class="h2 txt-dark my-3"></h1>
 			<a class="btn btn-light" th:href="@{${'/clients/' + invoice.client.id}}" th:utext="#{forms.invoice.add.back}"></a>
 			</div>
 			<div class="card-body">		
@@ -44,8 +44,8 @@
 						</thead>
 						<tbody></tbody>
 					</table>
-					<h5 class="text-right">Total: <span class="badge badge-secondary" id="invoiceTotal">0</span></h5>
-					<button type="submit" class="btn btn-success" th:text="#{forms.invoice.add.button.submit}"></button>
+					<h5 class="text-right">Total: <span class="badge btn-main" id="invoiceTotal">0</span></h5>
+					<button type="submit" class="btn btn-green" th:text="#{forms.invoice.add.button.submit}"></button>
 				</form>
 			</div>
 		</div>

@@ -7,8 +7,8 @@
 
 	<main class="container">
 	
-		<div class="card bg-light my-5">
-			<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1></div>
+		<div class="card bdr-main my-5">
+			<div class="card-header bdr-main"><h1 th:text="${title}" class="h2 txt-dark my-3"></h1></div>
 			<div class="card-body">		
 				<form th:action="@{/clients/new}" th:object="${client}" method="post">
 					<div class="form-group row">
@@ -26,7 +26,7 @@
 						<div class="col-sm-6"><input type="text" th:field="*{email}" id="email" class="form-control" th:errorclass="'form control alert-danger'"/></div>
 						<small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></small>		
 					</div>	
-					<button type="submit" class="btn btn-primary" th:text="#{forms.client.add.button.submit}"></button>
+					<button type="submit" class="btn btn-main mt-3" th:text="#{forms.client.add.button.submit}"></button>
 				</form>
 			</div>
 		</div>
