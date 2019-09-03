@@ -64,14 +64,27 @@ public class ClientController {
 	
 	//Methods
 	/**
-	 * Método que muestra el listado de clientes (con paginación)
+	 * Método que muestra el listado de clientes (con buscador y paginación)
 	 */
 	@RequestMapping(value= {"/", "", "/list"}, method=RequestMethod.GET)
-	public String list(@RequestParam(name="page", defaultValue="0") int page, Model model, Locale locale) {
-				
-		Page<Client> clients = clientService.getClientsByPage(page, MAX_RESULTS_PER_PAGE);
+	public String list(@RequestParam(name="search", required=false) String term, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect, Locale locale) {
+		
+		Page<Client> clients = null;
+		
+		if (null != term) {
+			clients = clientService.getClientsByNameAndPage(term, page, MAX_RESULTS_PER_PAGE);
+		} else {
+			clients = clientService.getClientsByPage(page, MAX_RESULTS_PER_PAGE);
+		}
+		
 		Paginator<Client> paginator = new Paginator<>("/clients", clients);
-				
+		
+		if(!clients.hasContent()) {
+			redirect.addFlashAttribute(TITLE, messages.getMessage("client.list.title", null, locale));
+			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.client.not.found", null, locale));
+			return REDIRECT_TO_LIST;
+		}
+						
 		model.addAttribute(TITLE, messages.getMessage("client.list.title", null, locale));
 		model.addAttribute(CLIENTS, clients);
 		model.addAttribute("page", paginator);

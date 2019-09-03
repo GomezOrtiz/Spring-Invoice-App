@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+
+<body>
+
+<script type="text/javascript" th:fragment="searchForm">
+	
+	$("#search").submit(e => {
+		e.preventDefault()
+		
+		let url = window.location.href
+		
+		if(url.includes("?page=")) {
+			url = url.substring(0, url.indexOf("?page="))
+		}
+		
+		if(url.includes("?search=")) {
+			url = url.substring(0, url.indexOf("?search="))
+		}
+		
+		window.location.href = url + "?search=" + $("#search-input").val()
+	})
+	
+</script>
+
+</body>
+
+</html>

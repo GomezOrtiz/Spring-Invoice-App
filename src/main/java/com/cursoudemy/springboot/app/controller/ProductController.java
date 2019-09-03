@@ -62,13 +62,26 @@ public class ProductController {
 	
 	//Methods
 	/**
-	 * Método que muestra el listado de productos (con paginación)
+	 * Método que muestra el listado de clientes (con buscador y paginación)
 	 */
 	@RequestMapping(value= {"/", "", "/list"}, method=RequestMethod.GET)
-	public String list(@RequestParam(name="page", defaultValue="0") int page, Model model, Locale locale) {
-				
-		Page<Product> products = productService.getProductsByPage(page, MAX_RESULTS_PER_PAGE);
+	public String list(@RequestParam(name="search", required=false) String term, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect, Locale locale) {
+		
+		Page<Product> products = null;
+		
+		if (null != term) {
+			products = productService.getProductsByNameAndPage(term, page, MAX_RESULTS_PER_PAGE);
+		} else {
+			products = productService.getProductsByPage(page, MAX_RESULTS_PER_PAGE);		
+		}
+		
 		Paginator<Product> paginator = new Paginator<>("/products", products);
+		
+		if(!products.hasContent()) {
+			redirect.addFlashAttribute(TITLE, messages.getMessage("product.list.title", null, locale));
+			redirect.addFlashAttribute(ERROR, messages.getMessage("product.list.errors.product.not.found", null, locale));
+			return REDIRECT_TO_LIST;
+		}
 				
 		model.addAttribute(TITLE, messages.getMessage("product.list.title", null, locale));
 		model.addAttribute(PRODUCTS, products);

@@ -12,6 +12,8 @@ public interface ClientService {
 
 	public Page<Client> getClientsByPage(int numPage, int maxPages);
 	
+	Page<Client> getClientsByNameAndPage(String name, int numPage, int maxPages);
+	
 	public Client findById(Long id);
 	
 	public void create(Client client);

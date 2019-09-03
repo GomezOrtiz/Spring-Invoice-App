@@ -32,6 +32,13 @@ public class ClientServiceImpl implements ClientService {
 		Pageable pageRequested = PageRequest.of(numPage, maxPages);
 		return clientDao.findAll(pageRequested);
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Page<Client> getClientsByNameAndPage(String name, int numPage, int maxPages) {
+		Pageable pageRequested = PageRequest.of(numPage, maxPages);
+		return clientDao.findAllByNameContainsIgnoreCase(name, pageRequested);
+	}
 
 	@Override
 	@Transactional(readOnly=true)

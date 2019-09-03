@@ -15,4 +15,6 @@ public interface ProductDao extends CrudRepository<Product, Long> {
 	public List<Product> findByName(String query);
 
 	public Page<Product> findAll(Pageable pageRequested);
+
+	public Page<Product> findAllByNameContainsIgnoreCase(String name, Pageable pageRequested);
 }

@@ -7,8 +7,16 @@
 
 	<main class="container">
 	<div class="card my-5 bdr-main">
-		<div class="card-header bdr-main"><h1 th:text="${title}" class="h2 txt-dark my-3"></h1></div>
-		<div class="card-body">
+		<div class="card-header bdr-main">
+			<div class="row">
+			<div class="col-sm-8"><h1 th:text="${title}" class="h2 txt-dark my-3"></h1></div>
+			<div class="col-sm-4">
+				<form id="search" class="form-inline my-3">
+					<input id="search-input" class="form-control mr-sm-2" type="search" th:placeholder="#{search.form.product.placeholder}">
+		    		<button class="btn btn-main my-2 my-sm-0" type="submit" th:text="#{search.form.button}"></button>
+	    		</form>
+    		</div>
+    	<div class="card-body">
 			<p><a th:href="@{/products/new}" class="txt-contrast ml-2" th:text="#{product.list.button.add}"></a></p>
 			<table class="table table-striped">
 				<thead class="bg-second text-light">
@@ -38,5 +46,6 @@
 	</main>
 
 	<footer th:replace="layout/layout :: footer"></footer>
+	<script th:replace="layout/searchForm :: searchForm"></script>
 </body>
 </html>

@@ -26,10 +26,23 @@ public class ProductServiceImpl implements ProductService {
 		return (List<Product>) productDao.findAll();
 	}
 	
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Product> findByName(String name) {
+		return productDao.findByName(name);
+	}
+	
 	@Override
 	public Page<Product> getProductsByPage(int numPage, int maxPages) {
 		Pageable pageRequested = PageRequest.of(numPage, maxPages);
 		return productDao.findAll(pageRequested);
+	}
+	
+	@Override
+	public Page<Product> getProductsByNameAndPage(String name, int numPage, int maxPages) {
+		Pageable pageRequested = PageRequest.of(numPage, maxPages);
+		return productDao.findAllByNameContainsIgnoreCase(name, pageRequested);
 	}
 
 	@Override
@@ -106,11 +119,5 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public void deleteAll() {
 		productDao.deleteAll();
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public List<Product> findByName(String name) {
-		return productDao.findByName(name);
 	}
 }
