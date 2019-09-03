@@ -19,7 +19,8 @@
 }
 
 .txt-contrast, .txt-contrast:hover, .txt-contrast:visited {
-	color: #f19066;
+	color: #B53471;
+	font-weight: 500;
 }
 
 /* BORDER COLORS */
@@ -36,6 +37,15 @@
 }
 
 .btn-main:hover, .btn-main:visited {
+	color: rgba(255,255,255,.5);
+}
+
+.btn-contrast {
+	background-color: #B53471;
+	color: #f8f9fa;
+}
+
+.btn-contrast:hover, .btn-contrast:visited {
 	color: rgba(255,255,255,.5);
 }
 

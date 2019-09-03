@@ -35,17 +35,17 @@
 					<table id="invoiceItemsTable" class="table table-sm table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Price</th>
-								<th>Amount</th>
-								<th>Subtotal</th>
-								<th>Delete</th>
+								<th th:text="#{forms.invoice.add.product.name}"></th>
+								<th th:text="#{forms.invoice.add.product.price}"></th>
+								<th th:text="#{forms.invoice.add.product.amount}"></th>
+								<th th:text="#{forms.invoice.add.product.subtotal}"></th>
+								<th th:text="#{forms.invoice.add.product.delete}"></th>
 							</tr>
 						</thead>
 						<tbody></tbody>
 					</table>
-					<h5 class="text-right">Total: <span class="badge btn-main" id="invoiceTotal">0</span></h5>
-					<button type="submit" class="btn btn-green" th:text="#{forms.invoice.add.button.submit}"></button>
+					<h5 class="text-right"><span th:text="#{forms.invoice.add.product.total} + ': '"></span><span class="badge btn-main" id="invoiceTotal">0</span></h5>
+					<button type="submit" class="btn btn-main" th:text="#{forms.invoice.add.button.submit}"></button>
 				</form>
 			</div>
 		</div>
