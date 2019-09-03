@@ -46,7 +46,7 @@ public class ClientServiceImplTest {
 	}
 	
 	@Test
-	public void shouldFindOneClientById() {
+	public void shouldFindClientById() {
 		
 		//GIVEN
 		Long id = 5L;
@@ -74,7 +74,7 @@ public class ClientServiceImplTest {
 	}
 	
 	@Test
-	public void shouldCreateNewClient() {
+	public void shouldCreateClient() {
 		
 		//GIVEN
 		Client newClient = new Client("Carlos", "Martínez", "carlitos@gmail.com");

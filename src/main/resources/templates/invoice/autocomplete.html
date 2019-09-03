@@ -46,10 +46,16 @@
 				return
 			}
 		})
+		
+		$("form").submit(() => {
+			$("#invoiceItems").remove()
+			return
+		})
 	})	
 	
 	let getTotal = (id, price, amount) => {
 		$("#total_" + id).html(parseInt(price) * parseInt(amount))
+		getInvoiceTotal()
 	} 
 	
 	let alreadyExists = id => {
@@ -66,6 +72,18 @@
 		let amount = $("#amount_" + id).val() ? parseInt($("#amount_" + id).val()) : 0;
 		$("#amount_" + id).val(amount++)
 		getTotal(id,price,amount)
+	}
+	
+	let deleteInvoiceItem = id => {
+		$("#item_" + id).remove()
+	}
+	
+	let getInvoiceTotal = () => {
+		let total = 0
+		$("span[id^='total_']").each((index, element) => {
+			total += parseInt($(element).html())
+		})
+		$("#invoiceTotal").html(total)
 	}
 	
 </script>

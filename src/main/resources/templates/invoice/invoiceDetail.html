@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<main class="container py-4">
+	
+		<div class="card bg-light">
+			<div class="card-header"><h1 th:text="${title + ' ' + invoice.id}" class="text-secondary my-3"></h1>
+				<a class="btn btn-light" th:href="@{${'/clients/' + invoice.client.id}}" th:utext="#{invoice.detail.back}"></a>
+			</div>
+			<div class="card-body border">
+				<ul class="list-group">
+					<li class="list-group-item" th:text="#{invoice.detail.description(${invoice.description})}"></li>
+					<li th:if="${not #strings.isEmpty(invoice.details)}" class="list-group-item" th:text="${invoice.details}"></li>
+					<li th:if="${#strings.isEmpty(invoice.details)}" class="list-group-item text-muted" th:text="#{invoice.detail.not.details}"></li>
+					<li class="list-group-item" th:text="#{invoice.detail.total(${invoice.total})}"></li>
+					<li class="list-group-item" th:text="#{invoice.detail.createdAt(${invoice.createdAt})}"></li>
+				</ul>
+				<table th:if="${not #lists.isEmpty(invoice.items)}" class="table table-bordered table-striped my-4">
+					<thead class="thead-dark">
+						<tr>
+							<th th:text="#{invoice.detail.item.name}"></th>
+							<th th:text="#{invoice.detail.item.price}"></th>
+							<th th:text="#{invoice.detail.item.amount}"></th>
+							<th th:text="#{invoice.detail.item.total}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item: ${invoice.items}">
+							<td th:text="${item.product.name}"></td>
+							<td th:text="${item.product.price}"></td>
+							<td th:text="${item.amount}"></td>
+							<td th:text="${item.total}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	
+	</main>
+	
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

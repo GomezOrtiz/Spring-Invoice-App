@@ -38,12 +38,14 @@
 								<th>Name</th>
 								<th>Price</th>
 								<th>Amount</th>
-								<th>Total</th>
+								<th>Subtotal</th>
+								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody></tbody>
 					</table>
-					<button type="submit" class="btn btn-secondary" th:text="#{forms.invoice.add.button.submit}"></button>
+					<h5 class="text-right">Total: <span class="badge badge-secondary" id="invoiceTotal">0</span></h5>
+					<button type="submit" class="btn btn-success" th:text="#{forms.invoice.add.button.submit}"></button>
 				</form>
 			</div>
 		</div>

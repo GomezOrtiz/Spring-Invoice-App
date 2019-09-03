@@ -8,5 +8,5 @@ import com.cursoudemy.springboot.app.model.entity.Client;
 import com.cursoudemy.springboot.app.model.entity.Invoice;
 
 public interface InvoiceDao extends CrudRepository<Invoice, Long>{
-	List<Invoice> findByClient(Client client);
+	public List<Invoice> findByClient(Client client);
 }

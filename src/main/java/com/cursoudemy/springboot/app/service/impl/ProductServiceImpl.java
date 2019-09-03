@@ -4,11 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cursoudemy.springboot.app.model.dao.ProductDao;
 import com.cursoudemy.springboot.app.model.entity.Product;
+import com.cursoudemy.springboot.app.service.InvoiceService;
 import com.cursoudemy.springboot.app.service.ProductService;
 
 @Service
@@ -16,11 +20,20 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private ProductDao productDao;
+	
+	@Autowired
+	private InvoiceService invoiceService;
 
 	@Override
 	@Transactional(readOnly=true)
 	public List<Product> findAll() {
 		return (List<Product>) productDao.findAll();
+	}
+	
+	@Override
+	public Page<Product> getProductsByPage(int numPage, int maxPages) {
+		Pageable pageRequested = PageRequest.of(numPage, maxPages);
+		return productDao.findAll(pageRequested);
 	}
 
 	@Override
@@ -83,8 +96,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void delete(Long id) {
+		// NO ES BUENA IDEA USAR ESTE MÉTODO PORQUE AFECTA SERIAMENTE A LAS FACTURAS.
+		// SE CREARÁ UN MÉTODO PARA DESACTIVAR PRODUCTOS EN LUGAR DE BORRARLOS Y ALGÚN
+		// TIPO DE FILTRO PARA DISTINGUIRLOS EN LA LISTA.
 		if(null != findById(id)) {
 			productDao.deleteById(id);
+			invoiceService.filterForDeletedProduct(id); // Borramos las líneas de factura correspondientes y las facturas que se queden sin líneas
 		} else {
 			throw new IllegalArgumentException("No existe ningún producto con esa ID");
 		}
@@ -101,6 +118,4 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findByName(String name) {
 		return productDao.findByName(name);
 	}
-
-
 }

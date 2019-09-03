@@ -2,6 +2,8 @@ package com.cursoudemy.springboot.app.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.cursoudemy.springboot.app.model.entity.Product;
 
 public interface ProductService {
@@ -25,4 +27,6 @@ public interface ProductService {
 	public void delete(Long id) throws Exception;
 
 	public void deleteAll();
+
+	public Page<Product> getProductsByPage(int page, int maxResultsPerPage);
 }

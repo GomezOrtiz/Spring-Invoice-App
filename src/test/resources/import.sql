@@ -18,5 +18,3 @@ INSERT INTO products (name, price) VALUES ('Sony Notebook Z110', 37990);
 INSERT INTO invoices (description, details, client_id, created_at) VALUES ('Factura equipos de oficina', null, 1, NOW());
 INSERT INTO invoice_items (amount, invoice_id, product_id) VALUES (1, 1, 1);
 INSERT INTO invoice_items (amount, invoice_id, product_id) VALUES (2, 1, 4);
-INSERT INTO invoice_items (amount, invoice_id, product_id) VALUES (1, 1, 5);
-INSERT INTO invoice_items (amount, invoice_id, product_id) VALUES (1, 1, 7);

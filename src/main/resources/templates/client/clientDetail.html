@@ -30,7 +30,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="invoice: ${client.invoices}">
-							<td th:text="${invoice.id}"></td>
+							<td class="badge badge-success margin mt-1 ml-4"><a th:href="@{${'/invoices/' + invoice.id}}"><span class="text-light" th:text="${invoice.id}"></span></a></td>
 							<td th:text="${invoice.description}"></td>
 							<td th:text="${invoice.details}"></td>
 							<td th:text="${invoice.createdAt}"></td>

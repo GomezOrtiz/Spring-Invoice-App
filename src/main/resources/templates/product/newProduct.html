@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<main class="container">
+	
+		<div class="card bg-light my-5">
+			<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1></div>
+			<div class="card-body">		
+				<form th:action="@{/products/new}" th:object="${product}" method="post">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="name" th:text="#{forms.product.add.name}"></label>
+						<div class="col-sm-6"><input type="text" th:field="*{name}" id="name" class="form-control" th:errorclass="'form control alert-danger'"/></div>	
+						<small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="form-text text-danger"></small>	
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="price" th:text="#{forms.product.add.price}"></label>
+						<div class="col-sm-6"><input type="text" th:field="*{price}" id="price" class="form-control" th:errorclass="'form control alert-danger'"/></div>
+						<small th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="form-text text-danger"></small>	
+					</div>
+					<button type="submit" class="btn btn-primary" th:text="#{forms.product.add.button.submit}"></button>
+				</form>
+			</div>
+		</div>
+	</main>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

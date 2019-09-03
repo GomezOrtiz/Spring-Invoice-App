@@ -50,7 +50,7 @@ public class Invoice implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Client client;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="invoice_id")
 	private List<InvoiceItem> items;
 	
@@ -109,8 +109,8 @@ public class Invoice implements Serializable {
 	public Double getTotal () {
 		Double total = 0.0;
 		
-		for (int i = 0; i < items.size(); i++) {
-			total += items.get(i).getTotal();
+		for (InvoiceItem item : items) {
+			total += item.getTotal();
 		}
 		
 		return total;

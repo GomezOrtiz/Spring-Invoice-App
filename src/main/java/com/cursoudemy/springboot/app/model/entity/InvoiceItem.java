@@ -27,6 +27,10 @@ public class InvoiceItem implements Serializable {
 	@JoinColumn(name="product_id")
 	private Product product;
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="invoice_id")
+	private Invoice invoice;
+
 	public Long getId() {
 		return id;
 	}
@@ -49,6 +53,14 @@ public class InvoiceItem implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
 	
 	public Double getTotal() {

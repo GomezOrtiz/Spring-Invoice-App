@@ -12,9 +12,12 @@ public interface InvoiceService {
 	
 	public List<Invoice> findByClient(Long clientId);
 	
+	public void filterForDeletedProduct(Long productId);
+	
 	public void create(Invoice invoice);
 	
 	public void update(Invoice invoice);
 	
 	public void delete(Long id);
+
 }
