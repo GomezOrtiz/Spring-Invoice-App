@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cursoudemy.springboot.app.model.dao.InvoiceDao;
-import com.cursoudemy.springboot.app.model.dao.InvoiceItemDao;
 import com.cursoudemy.springboot.app.model.entity.Invoice;
-import com.cursoudemy.springboot.app.model.entity.InvoiceItem;
 import com.cursoudemy.springboot.app.service.ClientService;
 import com.cursoudemy.springboot.app.service.InvoiceService;
 
@@ -19,9 +17,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 	
 	@Autowired
 	private InvoiceDao invoiceDao;
-	
-	@Autowired
-	private InvoiceItemDao invoiceItemDao;
 	
 	@Autowired
 	private ClientService clientService;
@@ -45,23 +40,6 @@ public class InvoiceServiceImpl implements InvoiceService {
 			return invoiceDao.findByClient(clientService.findById(clientId));
 		} else {
 			return null;
-		}
-	}
-	
-	@Override
-	@Transactional
-	public void filterForDeletedProduct (Long productId) {
-		// ES UN MÉTODO PROVISIONAL HASTA QUE LOS PRODUCTOS SE DESACTIVEN EN LUGAR DE BORRARSE.
-		List<InvoiceItem> items = invoiceItemDao.findByProductId(productId);
-		
-		for (InvoiceItem item : items) {
-			Invoice currentInvoice = item.getInvoice();
-			System.out.println(currentInvoice);
-			invoiceItemDao.delete(item);
-			System.out.println(findById(currentInvoice.getId()).getItems());
-			if(findById(currentInvoice.getId()).getItems().isEmpty()) {
-				delete(currentInvoice.getId());
-			}
 		}
 	}
 	

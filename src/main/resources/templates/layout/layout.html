@@ -5,11 +5,12 @@
 <title th:text="#{layout.head.app.name} + ' ' + ${title}"></title>
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
 	<header th:fragment="header">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-main">
 			<a class="navbar-brand" th:href="@{/}"
 				th:text="#{layout.header.company.name}"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"

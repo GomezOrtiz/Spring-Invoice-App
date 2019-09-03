@@ -6,12 +6,12 @@
 	<header th:replace="layout/layout :: header"></header>
 
 	<main class="container">
-	<div class="card bg-light my-5">
-		<div class="card-header"><h1 th:text="${title}" class="text-secondary my-3"></h1></div>
+	<div class="card my-5 bdr-main">
+		<div class="card-header bdr-main"><h1 th:text="${title}" class="h2 txt-dark my-3"></h1></div>
 		<div class="card-body">
-			<p><a th:href="@{/products/new}" class="text-primary ml-2" th:text="#{product.list.button.add}"></a></p>
+			<p><a th:href="@{/products/new}" class="txt-contrast ml-2" th:text="#{product.list.button.add}"></a></p>
 			<table class="table table-striped">
-				<thead class="bg-dark text-light">
+				<thead class="bg-second text-light">
 					<tr>
 						<th th:text="#{product.list.name}"></th>
 						<th th:text="#{product.list.price}"></th>
@@ -25,8 +25,8 @@
 						<td th:text="${product.price}"></td>
 						<td th:text="${product.createdAt}"></td>
 						<td>
-							<a th:href="@{/products/edit/} + ${product.id}"><button class="btn btn-primary mr-3"  th:text="#{product.list.button.edit}"></button></a>
-							<a th:href="@{/products/delete/} + ${product.id}"><button class="btn btn-danger" th:text="#{product.list.button.delete}"></button></a>
+							<a th:href="@{/products/edit/} + ${product.id}"><button class="btn btn-blue mr-3"  th:text="#{product.list.button.edit}"></button></a>
+							<a th:href="@{/products/delete/} + ${product.id}"><button class="btn btn-red" th:text="#{product.list.button.delete}"></button></a>
 						</td>
 					</tr>
 				</tbody>

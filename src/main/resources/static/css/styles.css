@@ -1,0 +1,77 @@
+
+/* BACKGROUND COLORS */
+
+.bg-main {
+	background-color: #574b90;	
+}
+
+.bg-second {
+	background-color: #786fa6;
+}
+
+/* TEXT COLOR */
+
+.txt-dark {
+	color: #574b90;
+}
+
+.txt-light, .txt-light:hover, .txt-light:visited {
+	color: #706fd3;
+}
+
+.txt-contrast, .txt-contrast:hover, .txt-contrast:visited {
+	color: #f19066;
+}
+
+/* BORDER COLORS */
+
+.bdr-main {
+	border-color: rgba(87, 75, 144, .425);
+}
+
+/* BUTTON COLORS */
+
+.btn-main {
+	background-color: #574b90;	
+	color: #f8f9fa;
+}
+
+.btn-main:hover, .btn-main:visited {
+	color: rgba(255,255,255,.5);
+}
+
+.btn-green {
+	background-color: #218c74;
+	color: #f8f9fa;
+}
+
+.btn-green:hover, .btn-green:visited {
+	color: rgba(255,255,255,.5);
+}
+
+.btn-orange {
+	background-color: #f19066;
+	color: #f8f9fa;
+}
+
+.btn-orange:hover, .btn-orange:visited {
+	color: rgba(255,255,255,.5);
+}
+
+.btn-red {
+	background-color: #b33939;
+	color: #f8f9fa;
+}
+
+.btn-red:hover, .btn-red:visited {
+	color: rgba(255,255,255,.5);
+}
+
+.btn-blue {
+	background-color: #34ace0;
+	color: #f8f9fa;
+}
+
+.btn-blue:hover, .btn-blue:visited {
+	color: rgba(255,255,255,.5);
+}

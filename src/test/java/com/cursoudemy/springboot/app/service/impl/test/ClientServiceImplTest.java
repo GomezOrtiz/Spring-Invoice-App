@@ -11,11 +11,14 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import com.cursoudemy.springboot.app.model.entity.Client;
 import com.cursoudemy.springboot.app.service.ClientService;
 
 @SpringBootTest
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ClientServiceImplTest {
 	
 	@Autowired
@@ -138,7 +141,7 @@ public class ClientServiceImplTest {
 	public void shouldDeleteClient() {
 		
 		//GIVEN
-		Long id = 6L;
+		Long id = 4L;
 		Client beforeDeleted = clientService.findById(id);
 		Client expected = new Client("José Luis", "Avilés", "peplu@gmail.com");
 
@@ -147,8 +150,8 @@ public class ClientServiceImplTest {
 		List<Client> result = clientService.findAll();
 		
 		//THEN
-		assertEquals(5, result.size(), "El número de clientes debería ser el esperado");
-        assertEquals("Carlos", beforeDeleted.getName(), "El nombre del cliente antes de ser borrado debería ser el esperado");
+		assertEquals(4, result.size(), "El número de clientes debería ser el esperado");
+        assertEquals("Enrique", beforeDeleted.getName(), "El nombre del cliente antes de ser borrado debería ser el esperado");
         assertEquals(expected.getName(), result.get(result.size() -1).getName(), "El nombre del último cliente tras la eliminación debería ser el esperado");
         assertNull(clientService.findById(id), "No debería encontrar el cliente borrado");
         

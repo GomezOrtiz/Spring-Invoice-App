@@ -7,9 +7,9 @@
 
 	<main class="container py-4">
 	
-		<div class="card bg-light">
-			<div class="card-header"><h1 class="text-secondary" th:text="${title}"></h1></div>
-			<div class="card-body border">
+		<div class="card bdr-main">
+			<div class="card-header bdr-main"><h1 class="h2 txt-dark my-3" th:text="${title}"></h1></div>
+			<div class="card-body bdr-main">
 				<ul class="list-group">
 					<li class="list-group-item" th:text="${client.name}"></li>
 					<li class="list-group-item" th:text="${client.surname}"></li>
@@ -17,9 +17,9 @@
 					<li class="list-group-item" th:text="${client.createdAt}"></li>
 				</ul>
 				<div class="alert alert-info my-4" th:if="${#lists.isEmpty(client.invoices)}" th:text="#{client.detail.errors.invoice.not.found(${client.name + ' ' + client.surname})}"></div>			
-				<a th:href="@{${'/invoices/' + client.id + '/new'}}"><button class="btn btn-primary mt-4" th:text="#{client.detail.button.add.invoice}"></button></a>
+				<a th:href="@{${'/invoices/' + client.id + '/new'}}"><button class="btn btn-orange mt-4" th:text="#{client.detail.button.add.invoice}"></button></a>
 				<table th:if="${not #lists.isEmpty(client.invoices)}" class="table table-bordered table-striped my-4">
-					<thead class="thead-dark">
+					<thead class="bg-second text-light">
 						<tr>
 							<th th:text="#{client.detail.invoice.number}"></th>
 							<th th:text="#{client.detail.invoice.description}"></th>
@@ -30,7 +30,7 @@
 					</thead>
 					<tbody>
 						<tr th:each="invoice: ${client.invoices}">
-							<td class="badge badge-success margin mt-1 ml-4"><a th:href="@{${'/invoices/' + invoice.id}}"><span class="text-light" th:text="${invoice.id}"></span></a></td>
+							<td class="badge btn-orange margin mt-1 ml-4"><a th:href="@{${'/invoices/' + invoice.id}}"><span class="text-light" th:text="${invoice.id}"></span></a></td>
 							<td th:text="${invoice.description}"></td>
 							<td th:text="${invoice.details}"></td>
 							<td th:text="${invoice.createdAt}"></td>

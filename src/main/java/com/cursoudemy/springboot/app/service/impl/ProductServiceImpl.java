@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cursoudemy.springboot.app.model.dao.ProductDao;
 import com.cursoudemy.springboot.app.model.entity.Product;
-import com.cursoudemy.springboot.app.service.InvoiceService;
 import com.cursoudemy.springboot.app.service.ProductService;
 
 @Service
@@ -20,9 +19,6 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private ProductDao productDao;
-	
-	@Autowired
-	private InvoiceService invoiceService;
 
 	@Override
 	@Transactional(readOnly=true)
@@ -101,7 +97,6 @@ public class ProductServiceImpl implements ProductService {
 		// TIPO DE FILTRO PARA DISTINGUIRLOS EN LA LISTA.
 		if(null != findById(id)) {
 			productDao.deleteById(id);
-			invoiceService.filterForDeletedProduct(id); // Borramos las líneas de factura correspondientes y las facturas que se queden sin líneas
 		} else {
 			throw new IllegalArgumentException("No existe ningún producto con esa ID");
 		}

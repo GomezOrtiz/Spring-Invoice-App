@@ -11,9 +11,7 @@ public interface InvoiceService {
 	public Invoice findById(Long id);
 	
 	public List<Invoice> findByClient(Long clientId);
-	
-	public void filterForDeletedProduct(Long productId);
-	
+		
 	public void create(Invoice invoice);
 	
 	public void update(Invoice invoice);
