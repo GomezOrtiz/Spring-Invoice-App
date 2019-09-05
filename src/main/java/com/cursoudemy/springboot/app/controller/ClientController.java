@@ -47,7 +47,6 @@ public class ClientController {
 	private static final String TITLE = "title";
 	private static final String CLIENT = "client";
 	private static final String CLIENTS = "clients";
-//	private static final String INVOICES = "invoices";
 	private static final String SUCCESS = "success";
 	private static final String ERROR = "error";
 	private static final int MAX_RESULTS_PER_PAGE = 6;
@@ -100,12 +99,7 @@ public class ClientController {
 		
 		if(null != clientService.findById(id)) {
 			Client client = clientService.findById(id);
-			
-//			Page<Invoice> invoices = invoiceService.getInvoicesByClientAndPage(page, MAX_RESULTS_PER_PAGE);
-//			Paginator<Invoice> paginator = new Paginator<>("/clients/{id}", invoices);
-			
 			model.addAttribute(CLIENT, client);
-//			model.addAttribute(INVOICES, invoices);
 			model.addAttribute(TITLE, messages.getMessage("client.detail.title", null, locale));
 			return CLIENT_DETAIL_VIEW;
 		} else {
@@ -135,7 +129,7 @@ public class ClientController {
 	public String create(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
 		
 		clientFormValidator.validate(client, result);
-
+		
 		if (result.hasErrors()) {
 			model.addAttribute(TITLE, messages.getMessage("forms.client.add.title", null, locale));
 			return NEW_CLIENT_FORM_VIEW;

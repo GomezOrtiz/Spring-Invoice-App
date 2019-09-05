@@ -27,6 +27,8 @@ public class Product implements Serializable {
 	
 	private Double price;
 	
+	private boolean discontinued;
+	
 	@Temporal(value = TemporalType.DATE)
 	@Column(name="created_at")
 	private Date createdAt;
@@ -42,6 +44,7 @@ public class Product implements Serializable {
 	public Product (String name, Double price) {
 		this.name = name;
 		this.price = price;
+		this.discontinued = false;
 	}
 	
 	@PrePersist
@@ -87,6 +90,14 @@ public class Product implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	
+	public void setDiscontinued(boolean discontinued) {
+		this.discontinued = discontinued;
+	}
+	
+	public boolean isDiscontinued() {
+		return discontinued;
 	}
 
 }

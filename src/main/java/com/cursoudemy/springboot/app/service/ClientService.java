@@ -16,6 +16,8 @@ public interface ClientService {
 	
 	public Client findById(Long id);
 	
+	public List<Client> findByName(String term);
+	
 	public void create(Client client);
 	
 	public void update(Client client);

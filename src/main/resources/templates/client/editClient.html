@@ -8,7 +8,7 @@
 	<main class="container">
 	
 		<div class="card bdr-main my-5">
-			<div class="card-header bdr-main"><h1 th:text="${title}" class="txt-dark my-3"></h1></div>
+			<div class="card-header bdr-main"><h1 th:text="${title}" class="h2 txt-dark my-3"></h1></div>
 			<div class="card-body">		
 				<form th:action="@{/clients/edit}" th:object="${client}" method="post">
 					<div class="form-group row">

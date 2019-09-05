@@ -13,11 +13,11 @@
 			</div>
 			<div class="card-body border">
 				<ul class="list-group">
-					<li class="list-group-item" th:text="#{invoice.detail.description(${invoice.description})}"></li>
-					<li th:if="${not #strings.isEmpty(invoice.details)}" class="list-group-item" th:text="${invoice.details}"></li>
+					<li class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{invoice.detail.description} + ${':'}"></span><span th:text="${invoice.description}"></span></li>
+					<li th:if="${not #strings.isEmpty(invoice.details)}" class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{invoice.detail.details} + ${':'}"></span><span th:text="${invoice.details}"></span></li>
 					<li th:if="${#strings.isEmpty(invoice.details)}" class="list-group-item text-muted" th:text="#{invoice.detail.not.details}"></li>
-					<li class="list-group-item" th:text="#{invoice.detail.total(${invoice.total})}"></li>
-					<li class="list-group-item" th:text="#{invoice.detail.createdAt(${invoice.createdAt})}"></li>
+					<li class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{invoice.detail.total} + ${':'}"></span><span th:text="${invoice.total}"></span></li>
+					<li class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{invoice.detail.created.at} + ${':'}"></span><span th:text="${invoice.createdAt}"></span></li>
 				</ul>
 				<table th:if="${not #lists.isEmpty(invoice.items)}" class="table table-bordered table-striped my-4">
 					<thead class="bg-second text-light">

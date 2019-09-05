@@ -104,10 +104,19 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	@Transactional
+	public void changeDiscontinued(Long id) {
+		if(null != findById(id)) {
+			Product foundProduct = findById(id);
+			foundProduct.setDiscontinued(!foundProduct.isDiscontinued());
+			update(foundProduct);
+		} else {
+			throw new IllegalArgumentException("No existe ningún producto con esa ID");
+		}
+	}
+	
+	@Override
+	@Transactional
 	public void delete(Long id) {
-		// NO ES BUENA IDEA USAR ESTE MÉTODO PORQUE AFECTA SERIAMENTE A LAS FACTURAS.
-		// SE CREARÁ UN MÉTODO PARA DESACTIVAR PRODUCTOS EN LUGAR DE BORRARLOS Y ALGÚN
-		// TIPO DE FILTRO PARA DISTINGUIRLOS EN LA LISTA.
 		if(null != findById(id)) {
 			productDao.deleteById(id);
 		} else {

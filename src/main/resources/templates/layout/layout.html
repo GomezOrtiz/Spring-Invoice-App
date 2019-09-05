@@ -6,6 +6,7 @@
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
 <link rel="stylesheet" th:href="@{/css/styles.css}">
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
 <script defer th:src="@{/js/all.min.js}"></script>
 </head>
 <body>
@@ -24,6 +25,8 @@
 						th:text="#{layout.header.clients}"></a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/products}"
 						th:text="#{layout.header.products}"></a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/invoices/new}"
+						th:text="#{layout.header.invoice}"></a></li>
 				</ul>
 			</div>
 		</nav>

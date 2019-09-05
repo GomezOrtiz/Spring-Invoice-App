@@ -1,3 +1,7 @@
+body, h1, h2, h3, h4, h5, p, a, button, div, table, span {
+	font-family: 'Raleway', sans-serif;
+}
+
 /* BACKGROUND COLORS */
 
 .bg-main {
@@ -16,6 +20,10 @@
 
 .txt-light, .txt-light:hover, .txt-light:visited {
 	color: #706fd3;
+}
+
+.txt-white, .txt-white:hover, .txt-white:visited {
+	color: #f8f9fa;
 }
 
 .txt-contrast, .txt-contrast:hover, .txt-contrast:visited {
@@ -37,6 +45,15 @@
 }
 
 .btn-main:hover, .btn-main:visited {
+	color: rgba(255,255,255,.5);
+}
+
+.btn-second {
+	background-color: #786fa6;	
+	color: #f8f9fa;
+}
+
+.btn-second:hover, .btn-second:visited {
 	color: rgba(255,255,255,.5);
 }
 
@@ -105,4 +122,14 @@
 .alert-red {
     color: #b33939;
     border-color: #b33939;
+}
+
+/* BADGES */
+
+.badge-main {
+	border: 1px solid #574b90;
+	padding: 10px;
+}
+.badge-main span {
+	color: #574b90;
 }

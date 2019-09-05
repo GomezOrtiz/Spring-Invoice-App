@@ -11,39 +11,59 @@
 			<div class="card-header bdr-main"><h1 class="h2 txt-dark my-3" th:text="${title}"></h1></div>
 			<div class="card-body bdr-main">
 				<ul class="list-group">
-					<li class="list-group-item" th:text="${client.name}"></li>
-					<li class="list-group-item" th:text="${client.surname}"></li>
-					<li class="list-group-item" th:text="${client.email}"></li>
-					<li class="list-group-item" th:text="${client.createdAt}"></li>
+					<li class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{client.detail.name} + ${':'}"></span><span th:text="${client.name}"></span></li>
+					<li class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{client.detail.surname} + ${':'}"></span><span th:text="${client.surname}"></span></li>
+					<li class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{client.detail.email} + ${':'}"></span><span th:text="${client.email}"></span></li>
+					<li class="list-group-item"><span class="font-weight-bold mr-2" th:text="#{client.detail.created.at} + ${':'}"></span><span th:text="${client.createdAt}"></span></li>
 				</ul>
 				<div class="alert alert-main my-4" th:if="${#lists.isEmpty(client.invoices)}" th:text="#{client.detail.errors.invoice.not.found(${client.name + ' ' + client.surname})}"></div>			
-				<a th:href="@{${'/invoices/' + client.id + '/new'}}"><button class="btn btn-contrast mt-4" th:text="#{client.detail.button.add.invoice}"></button></a>
 				<table th:if="${not #lists.isEmpty(client.invoices)}" class="table table-bordered table-striped my-4">
 					<thead class="bg-second text-light">
 						<tr>
-							<th th:text="#{client.detail.invoice.number}"></th>
 							<th th:text="#{client.detail.invoice.description}"></th>
 							<th th:text="#{client.detail.invoice.details}"></th>
 							<th th:text="#{client.detail.invoice.created.at}"></th>
 							<th th:text="#{client.detail.invoice.total}"></th>
+							<th th:text="#{client.detail.invoice.delete}"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="invoice: ${client.invoices}">
-							<td class="badge btn-main margin mt-1 ml-4"><a th:href="@{${'/invoices/' + invoice.id}}"><span class="text-light" th:text="${invoice.id}"></span></a></td>
-							<td th:text="${invoice.description}"></td>
+							<td>
+							<span th:text="${invoice.description}"></span>
+							<a th:href="@{${'/invoices/' + invoice.id}}"><div class="badge badge-main margin ml-2"><span><i class="fas fa-search-plus mr-1"></i><span th:text="#{client.detail.invoice.show.detail}"></span></span></div></a>
+							</td>
 							<td th:text="${invoice.details}"></td>
 							<td th:text="${invoice.createdAt}"></td>
 							<td th:text="${invoice.total}"></td>
+							<td><a class="btn text-light btn-red btn-xs open-delete-modal" th:data-id="${invoice.id}">X</a></td>
 						</tr>
 					</tbody>
 				</table>
-<!-- 				<nav th:replace="layout/pagination :: pagination"></nav> -->
+				<div><button class="btn btn-green d-block mx-auto"><a class="txt-white" th:href="@{${'/invoices/' + client.id + '/new'}}"><span th:text="#{client.detail.button.add.invoice}"></span></a></button></div>
 			</div>
 		</div>
+		
 	
 	</main>
 	
+	<div th:replace="layout/deleteModal :: deleteModal"></div>
 	<footer th:replace="layout/layout :: footer"></footer>
+	
+	<script>
+		$(document).ready(() => {	
+			
+			$(".open-delete-modal").each((index, element) => {
+				$(element).click(() => {
+					let id = $(element).attr("data-id")
+					$('#deleteModal').modal('show')
+					$("#confirmDelete").click(() => {
+						window.location.href = "/invoices/delete/" + id
+					})
+				})
+			})
+			
+		})
+	</script>
 </body>
 </html>

@@ -78,7 +78,6 @@ public class ProductController {
 		Paginator<Product> paginator = new Paginator<>("/products", products);
 		
 		if(!products.hasContent()) {
-			redirect.addFlashAttribute(TITLE, messages.getMessage("product.list.title", null, locale));
 			redirect.addFlashAttribute(ERROR, messages.getMessage("product.list.errors.product.not.found", null, locale));
 			return REDIRECT_TO_LIST;
 		}
@@ -165,13 +164,13 @@ public class ProductController {
 	}
 	
 	/**
-	 * Método que elimina un producto
+	 * Método que cambia el estado de discontinuidad de un producto
 	 */
-	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/discontinue/{id}", method=RequestMethod.GET)
 	public String delete(@PathVariable("id") Long id, RedirectAttributes redirect, Locale locale) {
 		
 		try {		
-			productService.delete(id);
+			productService.changeDiscontinued(id);
 			redirect.addFlashAttribute(SUCCESS, messages.getMessage("product.list.delete.success", null, locale));
 		} catch(Exception e) {
 			redirect.addFlashAttribute(ERROR, messages.getMessage("product.list.errors.not.found", null, locale));

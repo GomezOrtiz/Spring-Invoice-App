@@ -31,4 +31,6 @@ public interface ProductService {
 	public void delete(Long id) throws Exception;
 
 	public void deleteAll();
+
+	void changeDiscontinued(Long id);
 }

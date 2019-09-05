@@ -11,10 +11,10 @@ import com.cursoudemy.springboot.app.model.entity.Product;
 
 public interface ProductDao extends CrudRepository<Product, Long> {
 	
-	@Query("select p from Product p where p.name like %?1%")
+	@Query("SELECT p FROM Product p WHERE p.name LIKE %?1% AND p.discontinued = false")
 	public List<Product> findByName(String query);
 
 	public Page<Product> findAll(Pageable pageRequested);
-
+	
 	public Page<Product> findAllByNameContainsIgnoreCase(String name, Pageable pageRequested);
 }

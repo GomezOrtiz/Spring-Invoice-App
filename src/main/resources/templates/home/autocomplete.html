@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+
+<body>
+
+<script type="text/javascript" th:fragment="autocomplete">
+	
+	$(document).ready(() => {
+		$("#client").autocomplete({
+			
+			source: (request,response) => {
+				$.ajax({
+					url: "/invoices/load-clients/" + request.term,
+					datatype: "json",
+					data: {
+						term: request.term
+					},
+					success: data => {
+						response($.map(data, item => {
+							console.log(item)
+							return {
+								value: item.name + " " + item.surname, 
+								label: item.name + " " + item.surname,
+								id: item.id,
+							}
+						}))							
+					}
+				})
+			},
+			select: (event,ui) => {
+				
+				console.log(ui.item)
+				
+				$("#clientId").val(ui.item.id)
+				$("#clientName").val(ui.item.label)
+								
+				return
+			}
+		})
+	})	
+	
+</script>
+
+</body>
+
+</html>

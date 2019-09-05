@@ -19,12 +19,13 @@
     		</div>
     	</div>
     	<div class="card-body">
-			<p><a th:href="@{/products/new}" class="txt-contrast ml-2" th:text="#{product.list.button.add}"></a></p>
+			<p><a th:href="@{/products/new}" class="ml-2 txt-contrast"><i class="fas fa-cart-plus mr-2"></i><span th:text="#{product.list.button.add}"></span></a></p>
 			<table class="table table-striped">
 				<thead class="bg-second text-light">
 					<tr>
 						<th th:text="#{product.list.name}"></th>
 						<th th:text="#{product.list.price}"></th>
+						<th th:text="#{product.list.discontinued}"></th>
 						<th th:text="#{product.list.created.at}"></th>
 						<th></th>
 					</tr>
@@ -33,10 +34,13 @@
 					<tr th:each="product: ${products}">
 						<td th:text="${product.name}"></td>
 						<td th:text="${product.price}"></td>
+						<td th:if="${product.isDiscontinued()}" th:text="#{common.yes}"></td>
+						<td th:if="${not product.isDiscontinued()}" th:text="#{common.no}"></td>
 						<td th:text="${product.createdAt}"></td>
 						<td>
 							<a th:href="@{/products/edit/} + ${product.id}"><button class="btn btn-blue mr-3"  th:text="#{product.list.button.edit}"></button></a>
-							<a th:href="@{/products/delete/} + ${product.id}"><button class="btn btn-red" th:text="#{product.list.button.delete}"></button></a>
+							<a th:if="${product.isDiscontinued()}" th:href="@{/products/discontinue/} + ${product.id}"><button class="btn btn-green" th:text="#{product.list.button.continue}"></button></a>
+							<a th:if="${not product.isDiscontinued()}" th:href="@{/products/discontinue/} + ${product.id}"><button class="btn btn-red" th:text="#{product.list.button.discontinue}"></button></a>
 						</td>
 					</tr>
 				</tbody>
@@ -46,8 +50,9 @@
 	</div>
 
 	</main>
-
+	
 	<footer th:replace="layout/layout :: footer"></footer>
+	
 	<script th:replace="layout/searchForm :: searchForm"></script>
 </body>
 </html>

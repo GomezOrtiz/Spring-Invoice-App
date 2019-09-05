@@ -8,10 +8,10 @@ INSERT INTO clients (name, surname, email, created_at) VALUES ('José Luis', 'Av
 
 /* Populate table products */
 
-INSERT INTO products (name, price) VALUES ('Panasonic Pantalla LCD', 259990);
-INSERT INTO products (name, price) VALUES ('Sony Camara digital DSC-W320B', 123490);
-INSERT INTO products (name, price) VALUES ('Apple iPod shuffle', 1499990);
-INSERT INTO products (name, price) VALUES ('Sony Notebook Z110', 37990);
+INSERT INTO products (name, price, discontinued) VALUES ('Panasonic Pantalla LCD', 259990, false);
+INSERT INTO products (name, price, discontinued) VALUES ('Sony Camara digital DSC-W320B', 123490, false);
+INSERT INTO products (name, price, discontinued) VALUES ('Apple iPod shuffle', 1499990, false);
+INSERT INTO products (name, price, discontinued) VALUES ('Sony Notebook Z110', 37990, false);
 
 /* Create some invoices */
 

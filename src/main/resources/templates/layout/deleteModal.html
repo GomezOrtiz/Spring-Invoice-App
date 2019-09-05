@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="deleteModal" class="modal fade" id="deleteModal" tabindex="-1"
+		role="dialog" aria-labelledby="deleteModal"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body"><p class="mt-3" th:text="#{modal.delete.question}"></p></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-xs btn-second"
+						data-dismiss="modal" th:text="#{modal.delete.close}"></button>
+					<a><button type="button" id="confirmDelete" class="btn btn-red btn-xs" th:text="#{modal.delete.confirm}"></button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script th:fragment="deleteModalScript">
+	
+		$(document).ready(() => {	
+			
+			$(".open-delete-modal").each((index, element) => {
+				$(element).click(() => {
+					let id = $(element).attr("data-id")
+					$('#deleteModal').modal('show')
+					$("#confirmDelete").click(() => {
+						window.location.href = window.location.href + "/delete/" + id
+					})
+				})
+			})
+			
+		})
+
+	</script>
+</body>
+</html>

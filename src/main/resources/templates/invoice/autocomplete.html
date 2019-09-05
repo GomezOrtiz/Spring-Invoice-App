@@ -19,8 +19,9 @@
 					success: data => {
 						response($.map(data, item => {
 							return {
-								value: item.id, 
-								label: item.name, 
+								value: item.name, 
+								label: item.name,
+								id: item.id,
 								price: item.price
 							}
 						}))							
@@ -29,19 +30,19 @@
 			},
 			select: (event,ui) => {
 				
-				if(alreadyExists(ui.item.value)){
-					increaseAmount(ui.item.value, ui.item.price)
+				if(alreadyExists(ui.item.id)){
+					increaseAmount(ui.item.id, ui.item.price)
 					return
 				}
 				
 				let line = $("#invoiceItems").html()
 				
-				line = line.replace(/{ID}/g, ui.item.value)
+				line = line.replace(/{ID}/g, ui.item.id)
 				line = line.replace(/{NAME}/g, ui.item.label)
 				line = line.replace(/{PRICE}/g, ui.item.price)
 				
 				$("#invoiceItemsTable tbody").append(line)
-				getTotal(ui.item.value, ui.item.price, 1)
+				getTotal(ui.item.id, ui.item.price, 1)
 								
 				return
 			}

@@ -19,7 +19,7 @@
     		</div>
 		</div>
 		<div class="card-body">
-			<p><a th:href="@{/clients/new}" class="ml-2 txt-contrast" th:text="#{client.list.button.add}"></a></p>
+			<p><a th:href="@{/clients/new}" class="ml-2 txt-contrast"><i class="fas fa-user-plus mr-2"></i><span th:text="#{client.list.button.add}"></span></a></p>
 			<table class="table table-striped">
 				<thead class="bg-second text-light">
 					<tr>
@@ -39,7 +39,7 @@
 						<td>
 							<a th:href="@{/clients/} + ${client.id}"><button class="btn btn-green mr-3"  th:text="#{client.list.button.detail}"></button></a>
 							<a th:href="@{/clients/edit/} + ${client.id}"><button class="btn btn-blue mr-3"  th:text="#{client.list.button.edit}"></button></a>
-							<a th:href="@{/clients/delete/} + ${client.id}"><button class="btn btn-red" th:text="#{client.list.button.delete}"></button></a>
+							<a><button class="btn btn-red open-delete-modal" th:data-id="${client.id}" th:text="#{client.list.button.delete}"></button></a>
 						</td>
 					</tr>
 				</tbody>
@@ -50,7 +50,10 @@
 
 	</main>
 	
+	<div th:replace="layout/deleteModal :: deleteModal"></div>
 	<footer th:replace="layout/layout :: footer"></footer>
+	
 	<script th:replace="layout/searchForm :: searchForm"></script>
+	<script th:replace="layout/deleteModal :: deleteModalScript"></script>
 </body>
 </html>

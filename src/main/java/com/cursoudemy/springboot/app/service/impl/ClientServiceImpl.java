@@ -47,6 +47,12 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
+	public List<Client> findByName(String name) {
+		return clientDao.findByName(name);
+	}
+
+	@Override
 	@Transactional
 	public void create(Client client) {
 		client.setCreatedAt(new Date());
@@ -69,4 +75,5 @@ public class ClientServiceImpl implements ClientService {
 			clientDao.deleteById(id);
 		}
 	}
+
 }
