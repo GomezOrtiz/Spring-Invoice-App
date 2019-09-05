@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<main class="container py-4">
+		<div class="card alert-red">
+			<div class="card-header bg-red text-light"><span th:text="#{error403.access.denied}"></span></div>
+			<div class="card-body">
+				<h5 class="card-title mb-4" th:text="#{error403.message(${#authentication.name})}"></h5>
+				<a th:href="@{/clients}" class="btn alert-red" role="button" th:text="#{error403.go.home}"></a>
+				<a th:href="@{/logout}" class="btn alert-red" role="button" th:text="#{error403.go.login}"></a>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

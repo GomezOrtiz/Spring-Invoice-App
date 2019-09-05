@@ -29,6 +29,10 @@
 						th:text="#{layout.header.invoice}"></a></li>
 				</ul>
 			</div>
+			<a class="nav-link txt-white" th:href="@{/logout}">
+				<i class="fas fa-sign-out-alt ml-3 mr-1"></i><span th:text="#{layout.header.logout}"></span>
+				<span sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
+			</a>
 		</nav>
 
 		<section class="alert alert-green" th:if="${null != success}"
