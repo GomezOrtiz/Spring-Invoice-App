@@ -23,7 +23,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable()
-		.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
+		.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/img/**").permitAll()
 		.antMatchers("/clients").hasAnyRole("USER")
 		.antMatchers("/products").hasAnyRole("USER")
 		.antMatchers("/invoices").hasAnyRole("USER")
@@ -32,19 +32,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/**/delete/**").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
-			.formLogin().loginPage("/login")
-			.permitAll()
+			.formLogin().loginPage("/login").permitAll()
 		.and()
-			.logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll()
-		.and()
-			.exceptionHandling().accessDeniedPage("/error_403");
+			.logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll();
 	}
 
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
 		
 		PasswordEncoder encoder = passwordEncoder();
-		UserBuilder users = User.builder().passwordEncoder(encoder::encode);
+		UserBuilder users = User.builder().passwordEncoder(password -> encoder.encode(password));
 		
 		builder.inMemoryAuthentication()
 		.withUser(users.username("admin").password("12345").roles("ADMIN", "USER"))
