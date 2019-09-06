@@ -25,7 +25,11 @@
 					let id = $(element).attr("data-id")
 					$('#deleteModal').modal('show')
 					$("#confirmDelete").click(() => {
-						window.location.href = window.location.href + "/delete/" + id
+						if(window.location.href.includes("page")){
+							window.location.href = window.location.href.substring(0, window.location.href.indexOf("page") - 1) + "/delete/" + id
+						} else {
+							window.location.href = window.location.href + "/delete/" + id
+						}
 					})
 				})
 			})

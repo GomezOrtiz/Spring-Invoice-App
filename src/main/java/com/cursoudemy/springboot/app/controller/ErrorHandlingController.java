@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
+@RequestMapping("/error")
 public class ErrorHandlingController implements ErrorController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ErrorController.class);
@@ -24,12 +25,15 @@ public class ErrorHandlingController implements ErrorController {
 	//Attributes
 	private static final String ERROR_PATH = "/error";
 	private static final String ERROR_VIEW = "error/error";
+	private static final String ERROR_404 = "redirect:/error/404";
+	private static final String ERROR_403 = "redirect:/error/403";
+	private static final String ERROR_500 = "redirect:/error/500";
 	private static final String ERROR_404_VIEW = "error/404";
 	private static final String ERROR_403_VIEW = "error/403";
-	private static final String ERROR_500_VIEW = "error/403";
+	private static final String ERROR_500_VIEW = "error/500";
 	
 	//Methods
-    @RequestMapping("/error")
+    @RequestMapping("")
     public String handleError(HttpServletRequest request) {
     	
     	Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
@@ -40,16 +44,31 @@ public class ErrorHandlingController implements ErrorController {
         	LOGGER.info("Se ha producido un error " + statusCode);
     		
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                return ERROR_404_VIEW;
+                return ERROR_404;
             } else if (statusCode == HttpStatus.FORBIDDEN.value()){
-            	return ERROR_403_VIEW;
+            	return ERROR_403;
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return ERROR_500_VIEW;
+                return ERROR_500;
             }
     	}
 
         return ERROR_VIEW;
+    }
+    
+    @RequestMapping("/404")
+    public String handle404() {
+        return ERROR_404_VIEW;
+    }
+    
+    @RequestMapping("/403")
+    public String handle403() {
+        return ERROR_403_VIEW;
+    }
+    
+    @RequestMapping("/500")
+    public String handle500() {
+        return ERROR_500_VIEW;
     }
 
 	@Override

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
 <meta charset="UTF-8" />
 <title th:text="#{layout.head.app.name} + ' ' + ${title}"></title>
@@ -25,16 +25,21 @@
 						th:text="#{layout.header.clients}"></a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/products}"
 						th:text="#{layout.header.products}"></a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/invoices/new}"
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link" th:href="@{/invoices/new}"
 						th:text="#{layout.header.invoice}"></a></li>
 				</ul>
 			</div>
-			<a class="nav-link txt-white" th:href="@{/logout}">
-				<i class="fas fa-sign-out-alt ml-3 mr-1"></i><span th:text="#{layout.header.logout}"></span>
-				<span sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
-			</a>
+				<a class="nav-link" data-toggle="modal" data-target="#logoutModal" role="button">
+					<i class="fas fa-sign-out-alt ml-3 mr-1 txt-white"></i><span class="txt-white" th:text="#{layout.header.logout}"></span>
+					<span class="txt-white" sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
+				</a>
 		</nav>
-
+		
+		<div th:replace="auth/logoutModal :: logoutModal"></div>
+	</header>
+	
+	<div th:fragment="notifications">
+		<section sec:authorize="not hasRole('ROLE_ADMIN')" class="alert alert-orange" th:text="#{layout.message.not.admin}"></section>
 		<section class="alert alert-green" th:if="${null != success}"
 			th:text="${success}"></section>
 		<section class="alert alert-red" th:if="${null != error}"
@@ -43,7 +48,7 @@
 			th:text="${warning}"></section>
 		<section class="alert alert-main" th:if="${null != info}"
 			th:text="${info}"></section>
-	</header>
+	</div>
 
 	<main class="container"></main>
 

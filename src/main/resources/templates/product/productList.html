@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
+	<header th:replace="layout/layout :: notifications"></header>
 
 	<main class="container">
 	<div class="card my-5 bdr-main">
@@ -19,7 +20,7 @@
     		</div>
     	</div>
     	<div class="card-body">
-			<p><a th:href="@{/products/new}" class="ml-2 txt-contrast"><i class="fas fa-cart-plus mr-2"></i><span th:text="#{product.list.button.add}"></span></a></p>
+			<p><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/products/new}" class="ml-2 txt-contrast"><i class="fas fa-cart-plus mr-2"></i><span th:text="#{product.list.button.add}"></span></a></p>
 			<table class="table table-striped">
 				<thead class="bg-second text-light">
 					<tr>
@@ -38,9 +39,9 @@
 						<td th:if="${not product.isDiscontinued()}" th:text="#{common.no}"></td>
 						<td th:text="${product.createdAt}"></td>
 						<td>
-							<a th:href="@{/products/edit/} + ${product.id}"><button class="btn btn-blue mr-3"  th:text="#{product.list.button.edit}"></button></a>
-							<a th:if="${product.isDiscontinued()}" th:href="@{/products/discontinue/} + ${product.id}"><button class="btn btn-green" th:text="#{product.list.button.continue}"></button></a>
-							<a th:if="${not product.isDiscontinued()}" th:href="@{/products/discontinue/} + ${product.id}"><button class="btn btn-red" th:text="#{product.list.button.discontinue}"></button></a>
+							<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/products/edit/} + ${product.id}"><button class="btn btn-blue mr-3"  th:text="#{product.list.button.edit}"></button></a>
+							<a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${product.isDiscontinued()}" th:href="@{/products/discontinue/} + ${product.id}"><button class="btn btn-green" th:text="#{product.list.button.continue}"></button></a>
+							<a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${not product.isDiscontinued()}" th:href="@{/products/discontinue/} + ${product.id}"><button class="btn btn-red" th:text="#{product.list.button.discontinue}"></button></a>
 						</td>
 					</tr>
 				</tbody>

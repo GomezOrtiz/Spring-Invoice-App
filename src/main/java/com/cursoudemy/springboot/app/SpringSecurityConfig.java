@@ -22,8 +22,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		http.csrf().disable()
-		.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/img/**").permitAll()
+		http.authorizeRequests()
+		.antMatchers("/", "/css/**", "/js/**", "/img/**").permitAll()
+		.antMatchers("/error/**").permitAll()
 		.antMatchers("/clients").hasAnyRole("USER")
 		.antMatchers("/products").hasAnyRole("USER")
 		.antMatchers("/invoices").hasAnyRole("USER")
@@ -44,7 +45,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		UserBuilder users = User.builder().passwordEncoder(password -> encoder.encode(password));
 		
 		builder.inMemoryAuthentication()
-		.withUser(users.username("admin").password("12345").roles("ADMIN", "USER"))
-		.withUser(users.username("david").password("12345").roles("USER"));
+		.withUser(users.username("admin").password("admin").roles("ADMIN", "USER"))
+		.withUser(users.username("user").password("user").roles("USER"));
 	}
 }

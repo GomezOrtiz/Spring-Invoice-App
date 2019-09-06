@@ -10,8 +10,10 @@
 			<div class="card-header bg-red text-light"><span th:text="#{error403.access.denied}"></span></div>
 			<div class="card-body">
 				<h5 class="card-title mb-4" th:text="#{error403.message(${#authentication.name})}"></h5>
-				<a th:href="@{/clients}" class="btn alert-red" role="button" th:text="#{error403.go.home}"></a>
-				<a th:href="@{/logout}" class="btn alert-red" role="button" th:text="#{error403.go.login}"></a>
+				<form th:action="@{/logout}" method="POST">
+					<a th:href="@{/clients}" class="btn alert-red" role="button" th:text="#{error403.go.home}"></a>				
+					<button type="submit" class="btn alert-red btn-xs" th:text="#{error403.go.login}"></button>
+				</form>
 			</div>
 		</div>
 	</main>

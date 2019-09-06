@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head"></head>
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
+	<header th:replace="layout/layout :: notifications"></header>
 
 	<main class="container">
 	<div class="card my-5 bdr-main">
@@ -19,7 +20,7 @@
     		</div>
 		</div>
 		<div class="card-body">
-			<p><a th:href="@{/clients/new}" class="ml-2 txt-contrast"><i class="fas fa-user-plus mr-2"></i><span th:text="#{client.list.button.add}"></span></a></p>
+			<p><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/clients/new}" class="ml-2 txt-contrast"><i class="fas fa-user-plus mr-2"></i><span th:text="#{client.list.button.add}"></span></a></p>
 			<table class="table table-striped">
 				<thead class="bg-second text-light">
 					<tr>
@@ -38,8 +39,8 @@
 						<td th:text="${client.createdAt}"></td>
 						<td>
 							<a th:href="@{/clients/} + ${client.id}"><button class="btn btn-green mr-3"  th:text="#{client.list.button.detail}"></button></a>
-							<a th:href="@{/clients/edit/} + ${client.id}"><button class="btn btn-blue mr-3"  th:text="#{client.list.button.edit}"></button></a>
-							<a><button class="btn btn-red open-delete-modal" th:data-id="${client.id}" th:text="#{client.list.button.delete}"></button></a>
+							<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/clients/edit/} + ${client.id}"><button class="btn btn-blue mr-3"  th:text="#{client.list.button.edit}"></button></a>
+							<a sec:authorize="hasRole('ROLE_ADMIN')" ><button class="btn btn-red open-delete-modal" th:data-id="${client.id}" th:text="#{client.list.button.delete}"></button></a>
 						</td>
 					</tr>
 				</tbody>
