@@ -197,5 +197,4 @@ public class ClientController {
 		
 		return REDIRECT_TO_LIST;
 	}
-	
 }

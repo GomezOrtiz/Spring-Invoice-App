@@ -4,7 +4,10 @@
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
-
+	
+	<section class="alert alert-red" th:if="${null != error}"
+	th:text="${error}"></section>
+			
 	<main class="container py-4">
 	
 		<div class="card border bdr-main text-center mx-auto" style="width:60%">

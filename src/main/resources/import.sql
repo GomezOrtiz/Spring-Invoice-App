@@ -51,3 +51,12 @@ INSERT INTO invoice_items (amount, invoice_id, product_id) VALUES (1, 1, 7);
 
 INSERT INTO invoices (description, details, client_id, created_at) VALUES ('Factura Bicicleta', 'Alguna nota importante!', 1, NOW());
 INSERT INTO invoice_items (amount, invoice_id, product_id) VALUES (3, 2, 6);
+
+/* Create some users and authorities */
+
+INSERT INTO users (username, password, enabled) VALUES ('admin', '$2a$10$O0TVkNh3TKKG01EYaOtSFu.TOUicVqmEPvtUtShNqUh/cL9KqBQ/G', 1);
+INSERT INTO users (username, password, enabled) VALUES ('user', '$2a$10$t/9qmzu5hWggiia9pxQHE.HAvElxU.lOkG3nFEsJ48QfTA5Z2ePm6', 1);
+
+INSERT INTO authorities (user_id, authority) VALUES (1, 'ROLE_USER');
+INSERT INTO authorities (user_id, authority) VALUES (1, 'ROLE_ADMIN');
+INSERT INTO authorities (user_id, authority) VALUES (2, 'ROLE_USER');

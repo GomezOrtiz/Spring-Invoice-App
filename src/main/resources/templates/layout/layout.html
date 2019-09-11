@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- 	FRAGMENT HEAD -->
 <head th:fragment="head">
-<meta charset="UTF-8" />
-<title th:text="#{layout.head.app.name} + ' ' + ${title}"></title>
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
-<link rel="stylesheet" th:href="@{/css/styles.css}">
-<link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
-<script defer th:src="@{/js/all.min.js}"></script>
+	<meta charset="UTF-8" />
+	<title th:text="#{layout.head.app.name} + ' ' + ${title}"></title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
+	<script defer th:src="@{/js/all.min.js}"></script>
 </head>
+
 <body>
 
+<!-- 	FRAGMENT HEADER -->
 	<header th:fragment="header">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-main">
 			<a class="navbar-brand" th:href="@{/}"><i class="fas fa-city mr-2"></i><span th:text="#{layout.header.company.name}"></span></a>
@@ -38,6 +42,7 @@
 		<div th:replace="auth/logoutModal :: logoutModal"></div>
 	</header>
 	
+	<!-- 	FRAGMENT NOTIFICATIONS -->
 	<div th:fragment="notifications">
 		<section sec:authorize="not hasRole('ROLE_ADMIN')" class="alert alert-orange" th:text="#{layout.message.not.admin}"></section>
 		<section class="alert alert-green" th:if="${null != success}"
@@ -51,7 +56,8 @@
 	</div>
 
 	<main class="container"></main>
-
+	
+	<!-- 	FRAGMENT FOOTER -->
 	<footer th:fragment="footer" class="container my-3">
 		<hr />
 		<small th:text="#{layout.footer.description}" class="txt-dark font-weight-bold"></small>
@@ -71,7 +77,6 @@
 			integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
 			crossorigin="anonymous"></script>
 	</footer>
-
 
 </body>
 </html>
