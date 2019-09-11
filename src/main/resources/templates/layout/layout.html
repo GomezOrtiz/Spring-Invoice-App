@@ -31,12 +31,14 @@
 						th:text="#{layout.header.products}"></a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link" th:href="@{/invoices/new}"
 						th:text="#{layout.header.invoice}"></a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link" th:href="@{/user/new}"
+						th:text="#{layout.header.signup}"></a></li>
 				</ul>
 			</div>
 				<a class="nav-link" data-toggle="modal" data-target="#logoutModal" role="button">
 					<i class="fas fa-sign-out-alt ml-3 mr-1 txt-white"></i><span class="txt-white" th:text="#{layout.header.logout}"></span>
 					<span class="txt-white" sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
-				</a>
+				</a>				
 		</nav>
 		
 		<div th:replace="auth/logoutModal :: logoutModal"></div>

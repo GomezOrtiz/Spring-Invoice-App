@@ -1,6 +1,7 @@
 package com.cursoudemy.springboot.app.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -69,9 +70,22 @@ public class User implements Serializable {
 	public List<Role> getRoles() {
 		return roles;
 	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	
+	public void setRoles(List<String> roles) {
+		
+		List<Role> newRoles = new ArrayList<Role>();
+		
+		if(roles.size() == 1 && roles.get(0).equals("ROLE_ADMIN")) {
+			roles.add("ROLE_USER");
+		}
+		
+		for(String stringRole : roles) {
+			Role role = new Role();
+			role.setAuthority(stringRole);
+			newRoles.add(role);
+		}
+		
+		this.roles = newRoles;
 	}
 
 	private static final long serialVersionUID = -6919043484230305815L;

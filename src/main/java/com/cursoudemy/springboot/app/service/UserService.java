@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,9 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional(readOnly=true)
@@ -49,5 +53,11 @@ public class UserService implements UserDetailsService {
 		}
 		
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getEnabled(), true, true, true, authorities);
+	}
+	
+	@Transactional
+	public void create(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userDao.save(user);
 	}
 }

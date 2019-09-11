@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<section class="alert alert-red" th:if="${null != error}"
+	th:text="${error}"></section>
+	
+	<main class="container">
+	
+		<div class="card bdr-main my-5">
+			<div class="card-header bdr-main"><h1 th:text="${title}" class="h2 txt-dark my-3"></h1></div>
+			<div class="card-body">		
+				<form th:action="@{/user/new}" th:object="${user}" method="post" id="newUserForm">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="username" th:text="#{forms.user.add.username}"></label>
+						<div class="col-sm-6"><input type="text" th:field="*{username}" id="username" class="form-control" th:errorclass="'form control alert-danger'"/></div>	
+						<small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="form-text text-danger"></small>	
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" for="password" th:text="#{forms.user.add.password}"></label>
+						<div class="col-sm-6"><input type="password" th:field="*{password}" id="password" class="form-control" th:errorclass="'form control alert-danger'"/></div>
+						<small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="form-text text-danger"></small>	
+					</div>
+				
+					<div class="form-group row">
+						<span class="col-sm-2" th:text="#{forms.user.add.roles}"></span>
+						<div class="col-sm-6">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox"
+									id="admin" value="ROLE_ADMIN" th:field="*{roles}"> <label
+									class="form-check-label" for="admin" th:text="#{forms.user.add.roles.admin}"></label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox"
+									id="user" value="ROLE_USER" th:field="*{roles}"> <label
+									class="form-check-label" for="user" th:text="#{forms.user.add.roles.user}"></label>
+							</div>
+							<small th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" class="form-text text-danger"></small>		
+						</div>
+					</div>
+
+				<button type="submit" class="btn btn-main mt-3" th:text="#{forms.user.add.button.submit}"></button>
+				</form>
+			</div>
+		</div>
+	</main>
+	<footer th:replace="layout/layout :: footer"></footer>
+	<script>
+	
+	$("#newUserForm").submit(() => {
+		if($("#username").val() == "" || $("#password").val() == "") {
+			$("#admin").prop("checked", false)
+			$("#user").prop("checked", false)
+		}
+	})
+	
+	</script>
+</body>
+</html>
