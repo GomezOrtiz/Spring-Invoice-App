@@ -15,8 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
-import com.cursoudemy.springboot.app.model.entity.Product;
-import com.cursoudemy.springboot.app.service.ProductService;
+import com.fakecorp.invoicing.app.model.entity.Product;
+import com.fakecorp.invoicing.app.service.ProductService;
 
 @SpringBootTest
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)

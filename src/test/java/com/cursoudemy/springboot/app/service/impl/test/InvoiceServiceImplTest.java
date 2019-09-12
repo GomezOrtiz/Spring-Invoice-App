@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cursoudemy.springboot.app.model.entity.Invoice;
-import com.cursoudemy.springboot.app.service.ClientService;
-import com.cursoudemy.springboot.app.service.InvoiceService;
+import com.fakecorp.invoicing.app.model.entity.Invoice;
+import com.fakecorp.invoicing.app.service.ClientService;
+import com.fakecorp.invoicing.app.service.InvoiceService;
 
 @SpringBootTest
 class InvoiceServiceImplTest {

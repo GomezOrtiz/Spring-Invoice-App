@@ -8,11 +8,10 @@
 		<version>2.1.7.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.cursoudemy.springboot.datajpa.app</groupId>
-	<artifactId>spring-boot-data-jpa</artifactId>
+	<groupId>com.fakecorp.invoicing.app</groupId>
+	<artifactId>fakecorp-invoicing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-data-jpa</name>
-	<description>Demo project for Spring Boot</description>
+	<name>fakecorp-invoicing</name>
 
 	<properties>
 		<java.version>11</java.version>
@@ -100,4 +99,5 @@
 		</plugins>
 	</build>
 
+	<description>Invoicing app with Spring and JPA</description>
 </project>
