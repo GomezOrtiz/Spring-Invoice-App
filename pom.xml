@@ -78,6 +78,11 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-junit-jupiter</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.23.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

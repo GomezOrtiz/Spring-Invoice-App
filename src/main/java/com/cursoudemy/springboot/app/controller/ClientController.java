@@ -32,7 +32,7 @@ import com.cursoudemy.springboot.app.utils.pagination.Paginator;
 @SessionAttributes("client")
 @Controller
 @RequestMapping("/clients")
-public class ClientController {
+public class ClientController extends AbstractController {
 	
 	//Views
 	private static final String CLIENTS_LIST_VIEW = "client/clientList";

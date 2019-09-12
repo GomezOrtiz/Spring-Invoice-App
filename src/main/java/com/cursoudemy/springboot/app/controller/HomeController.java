@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-public class HomeController {
+public class HomeController extends AbstractController {
 	
 	/**
 	 * Método que redirige las rutas más comunes del index al listado de clientes

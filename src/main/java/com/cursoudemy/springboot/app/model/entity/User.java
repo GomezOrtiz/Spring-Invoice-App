@@ -13,11 +13,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
+	
+	@Transient
+	private String DEFAULT_IMAGE = "https://res.cloudinary.com/ikeiala/image/upload/v1568284998/user.png";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +35,22 @@ public class User implements Serializable {
 	private String password;
 
 	private Boolean enabled;
+	
+	private String image;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private List<Role> roles;
+	
+	@PrePersist
+	private void setDefaults() {
+		if(getEnabled() == null) {
+			setEnabled(true);
+		}
+		if(getImage().isEmpty() || getImage() == null) {
+			setImage(DEFAULT_IMAGE);
+		}
+	}
 
 	public Long getId() {
 		return id;
@@ -67,11 +84,23 @@ public class User implements Serializable {
 		this.enabled = enabled;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public List<Role> getRoles() {
 		return roles;
 	}
 	
-	public void setRoles(List<String> roles) {
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	
+	public List<Role> parseRoles(List<String> roles) {
 		
 		List<Role> newRoles = new ArrayList<Role>();
 		
@@ -85,7 +114,7 @@ public class User implements Serializable {
 			newRoles.add(role);
 		}
 		
-		this.roles = newRoles;
+		return newRoles;
 	}
 
 	private static final long serialVersionUID = -6919043484230305815L;

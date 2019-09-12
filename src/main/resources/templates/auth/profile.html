@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+	<header th:replace="layout/layout :: notifications"></header>
+
+	<main class="container py-4">
+
+	<div class="card bdr-main">
+		<div class="card-header bdr-main">
+			<h1 class="h2 txt-dark my-3" th:text="${title}"></h1>
+		</div>
+		<div class="card-body bdr-main">
+			<div class="row">
+				<div class="col-sm-8">
+					<ul class="list-group">
+						<li class="list-group-item"><span
+							class="font-weight-bold mr-2"
+							th:text="#{user.detail.username} + ${':'}"></span><span
+							th:text="${loggedInUser.username}"></span></li>
+						<li class="list-group-item"><span
+							class="font-weight-bold mr-2"
+							th:text="#{user.detail.role} + ${':'}"></span></li>
+						<li th:each="role: ${loggedInUser.roles}" class="list-group-item"><span
+							th:text="${role.authority}"></span></li>
+					</ul>
+				</div>
+				<div class="col-sm-4">
+					<img th:src="${loggedInUser.image}" class="img-thumbnail" />
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	</main>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

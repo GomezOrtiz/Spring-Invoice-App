@@ -13,7 +13,6 @@ public class UserFormValidator implements Validator {
 	
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
-	private static final String ROLES = "roles";
 	
 	@Autowired
 	private PasswordValidator passwordValidator;
@@ -22,22 +21,18 @@ public class UserFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		
 		User user = (User) target;
-		
-		validateNameAndRoles(errors, user);
+				
+		validateName(errors, user);
 				
 		validatePassword(errors, user);
 	}
 	
-	private void validateNameAndRoles(Errors errors, User user) {
+	private void validateName(Errors errors, User user) {
 		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, USERNAME, "forms.user.errors.username.empty");
 
 		if (user.getUsername().length() > 50) {
 			errors.rejectValue(USERNAME, "forms.user.errors.username.invalid");
-		}
-		
-		if(user.getRoles().size() == 0) {
-				errors.rejectValue(ROLES, "forms.user.errors.roles.empty");
 		}
 	}
 	

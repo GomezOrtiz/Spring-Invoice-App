@@ -5,10 +5,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.cursoudemy.springboot.app.model.dao.UserDao;
+import com.cursoudemy.springboot.app.model.entity.User;
 
 /**
  * Controlador para manejar los errores
@@ -31,6 +38,10 @@ public class ErrorHandlingController implements ErrorController {
 	private static final String ERROR_404_VIEW = "error/404";
 	private static final String ERROR_403_VIEW = "error/403";
 	private static final String ERROR_500_VIEW = "error/500";
+	
+	//Beans
+	@Autowired
+	private UserDao userDao;
 	
 	//Methods
     @RequestMapping("")
@@ -74,6 +85,16 @@ public class ErrorHandlingController implements ErrorController {
 	@Override
 	public String getErrorPath() {
 		return ERROR_PATH;
+	}
+	
+	@ModelAttribute("loggedInUser")
+	public User getAuthenticatedUser() {
+		
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		    return userDao.findByUsername(principal.getUsername());
+		}
+		return null;
 	}
 
 }

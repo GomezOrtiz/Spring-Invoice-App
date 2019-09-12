@@ -32,7 +32,7 @@ import com.cursoudemy.springboot.app.utils.pagination.Paginator;
 @SessionAttributes("product")
 @Controller
 @RequestMapping("/products")
-public class ProductController {
+public class ProductController extends AbstractController {
 		
 	//Views
 	private static final String PRODUCTS_LIST_VIEW = "product/productList";

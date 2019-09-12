@@ -38,7 +38,7 @@ import com.cursoudemy.springboot.app.service.ProductService;
 @Controller
 @RequestMapping(value="/invoices")
 @SessionAttributes("invoice")
-public class InvoiceController {
+public class InvoiceController extends AbstractController {
 	
 	//Views
 	private static final String NEW_INVOICE_FORM_VIEW = "invoice/newInvoice";
