@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +21,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cloudinary.utils.ObjectUtils;
-import com.cursoudemy.springboot.app.CloudinaryConfig;
 import com.cursoudemy.springboot.app.model.entity.User;
 import com.cursoudemy.springboot.app.service.UserService;
 import com.cursoudemy.springboot.app.utils.forms.UserFormValidator;
+import com.cursoudemy.springboot.app.utils.upload.CloudinaryUploader;
 
 /**
  * Controlador del login y el signup
@@ -67,7 +65,7 @@ public class LoginController extends AbstractController {
 	@Autowired
 	private UserFormValidator userFormValidator;
 	@Autowired
-	private CloudinaryConfig cloudinary;
+	private CloudinaryUploader cloudinary;
 	
 	//Methods
 	@RequestMapping(value="/user/new", method=RequestMethod.GET)
@@ -81,7 +79,6 @@ public class LoginController extends AbstractController {
 		return NEW_USER_FORM_VIEW;
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/user/new", method=RequestMethod.POST)
 	public String signup(@ModelAttribute("user") User user, @RequestParam("formRoles") List<String> roles, @RequestParam("file") MultipartFile file, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
 		
@@ -95,11 +92,10 @@ public class LoginController extends AbstractController {
 		
 		if (!file.isEmpty()) {
 			try {
-				Map uploadResult = cloudinary.getCloudinary().uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-				user.setImage((String) uploadResult.get("secure_url"));
+				user.setImage(cloudinary.upload(file));
 			} catch (IOException e) {
 				result.rejectValue(IMAGE, "forms.user.errors.image.upload");
-				LOGGER.info("Se ha producido un error: " + e);
+				LOGGER.info("Se ha producido un error al subir la imagen a Cloudinary: " + e);
 			}
 		}
 		

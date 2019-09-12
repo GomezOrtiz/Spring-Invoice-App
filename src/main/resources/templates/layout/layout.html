@@ -24,7 +24,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
+				<ul class="navbar-nav mr-auto">
 					<li class="nav-item"><a class="nav-link" th:href="@{/clients}"
 						th:text="#{layout.header.clients}"></a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/products}"
@@ -34,14 +34,19 @@
 					<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link" th:href="@{/user/new}"
 						th:text="#{layout.header.signup}"></a></li>
 				</ul>
+				<ul class="navbar-nav navbar-right mx-4">
+					<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#logoutModal" role="button">
+						<i class="fas fa-sign-out-alt ml-3 mr-1 txt-white"></i><span class="txt-white" th:text="#{layout.header.logout}"></span>
+						<span class="txt-white" sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
+					</a></li>	
+					<li class="nav-item"><a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/profile}" role="button">
+						<img th:if="${loggedInUser}" th:src="${loggedInUser.image}" width="20px" height="20px" class="mr-1" /><span class="txt-white" th:text="#{layout.header.profile}"></span>
+					</a></li>
+					<li class="nav-item ml-3 ml-1"><a class="btn btn-outline-light" href="?lang=es_ES">ES</a></li>
+					<li class="nav-item ml-1 ml-1"><a class="btn btn-outline-light" href="?lang=en_US">EN</a></li>
+				</ul>
 			</div>
-				<a class="nav-link" data-toggle="modal" data-target="#logoutModal" role="button">
-					<i class="fas fa-sign-out-alt ml-3 mr-1 txt-white"></i><span class="txt-white" th:text="#{layout.header.logout}"></span>
-					<span class="txt-white" sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
-				</a>	
-				<a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/profile}" role="button">
-					<img th:if="${loggedInUser}" th:src="${loggedInUser.image}" width="20px" height="20px" class="mr-1" /><span class="txt-white" th:text="#{layout.header.profile}"></span>
-				</a>					
+								
 		</nav>
 		
 		<div th:replace="auth/logoutModal :: logoutModal"></div>

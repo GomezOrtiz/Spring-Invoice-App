@@ -4,9 +4,7 @@
 <body>
 
 	<header th:replace="layout/layout :: header"></header>
-
-	<section class="alert alert-red" th:if="${null != error}"
-	th:text="${error}"></section>
+	<header th:replace="layout/layout :: notifications"></header>
 	
 	<main class="container">
 	
@@ -44,10 +42,11 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-4 ml-5">
-							<label for="file" class="form-label" th:text="#{forms.user.add.image}"></label>
-							<input type="file" name="file" id="file">
-							<small th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="form-text text-danger"></small>		
+						<div class="col-sm-4 ml-5 custom-file">
+							<label for="file" class="form-label custom-file-label" th:text="#{forms.user.add.image}"></label>
+							<input type="file" name="file" id="file" class="custom-file-input">
+							<small th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="form-text text-danger"></small>
+							<small id="imageUrl" class="txt-contrast" th:text="${''}"></small>		
 						</div>
 					</div>
 				<button type="submit" class="btn btn-main mt-3" th:text="#{forms.user.add.button.submit}"></button>
@@ -63,6 +62,10 @@
 			$("#admin").prop("checked", false)
 			$("#user").prop("checked", false)
 		}
+	})
+	
+	$("#file").change(() => {
+		$("#imageUrl").text($("#file").prop('files')[0].name)
 	})
 	
 	</script>
