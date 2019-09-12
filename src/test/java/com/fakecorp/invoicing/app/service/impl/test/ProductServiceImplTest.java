@@ -1,4 +1,4 @@
-package com.cursoudemy.springboot.app.service.impl.test;
+package com.fakecorp.invoicing.app.service.impl.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

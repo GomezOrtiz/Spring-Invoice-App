@@ -1,10 +1,9 @@
-package com.cursoudemy.springboot.app.service.impl.test;
+package com.fakecorp.invoicing.app.service.impl.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,16 +25,6 @@ class InvoiceServiceImplTest {
 	
 	@Autowired
 	private ClientService clientService;
-	
-	@Test
-	void shouldFindAllInvoices() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void shouldFindInvoiceById() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	void shouldFindInvoicesByClient() {
@@ -81,20 +70,5 @@ class InvoiceServiceImplTest {
 		//THEN
 		assertNull(clientService.findById(clientId), "El cliente no debería existir");
 		assertNull(result, "No debería retornar facturas");
-	}
-
-	@Test
-	void shouldCreateInvoice() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void shouldUpdateInvoice() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void shouldDeleteInvoice() {
-		fail("Not yet implemented");
 	}
 }
