@@ -39,11 +39,20 @@
 						<i class="fas fa-sign-out-alt ml-3 mr-1 txt-white"></i><span class="txt-white" th:text="#{layout.header.logout}"></span>
 						<span class="txt-white" sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
 					</a></li>	
-					<li class="nav-item"><a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/profile}" role="button">
+					<li class="nav-item ml-2"><a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/profile}" role="button">
 						<img th:if="${loggedInUser}" th:src="${loggedInUser.image}" width="20px" height="20px" class="mr-1" /><span class="txt-white" th:text="#{layout.header.profile}"></span>
 					</a></li>
-					<li class="nav-item ml-3 ml-1"><a class="btn btn-outline-light" href="?lang=es_ES">ES</a></li>
-					<li class="nav-item ml-1 ml-1"><a class="btn btn-outline-light" href="?lang=en_US">EN</a></li>
+				
+					<li class="nav-item dropdown show ml-3 mr-1">
+						<a class="btn btn-second dropdown-toggle" href="#" role="button" id="select-language" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-globe-americas mr-1"></i><span th:text="#{layout.header.language}"></span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<a class="dropdown-item" th:href="@{/locale(lang=es_ES)}" th:text="#{layout.header.language.spanish}"></a>
+							<a class="dropdown-item" th:href="@{/locale(lang=en_US)}" th:text="#{layout.header.language.english}"></a>
+						</div>
+					</li>
+					
 				</ul>
 			</div>
 								
