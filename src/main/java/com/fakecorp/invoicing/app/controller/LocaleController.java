@@ -6,6 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * Controlador para redirigir a la página anterior tras cambiar de idioma
+ *
+ * @author David G. Ortiz
+ */
+
 @Controller
 public class LocaleController {
 	

@@ -27,16 +27,16 @@ import com.fakecorp.invoicing.app.utils.forms.UserFormValidator;
 import com.fakecorp.invoicing.app.utils.upload.CloudinaryUploader;
 
 /**
- * Controlador del login y el signup
+ * Controlador del login, la creación de usuarios y el perfil
  *
  * @author David G. Ortiz
  */
 
 @Controller
 @SessionAttributes("user")
-public class LoginController extends AbstractController {
+public class AuthController extends AbstractController {
 	
-	private Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+	private Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 	
 	//Views
 	private static final String LOGIN = "auth/login";

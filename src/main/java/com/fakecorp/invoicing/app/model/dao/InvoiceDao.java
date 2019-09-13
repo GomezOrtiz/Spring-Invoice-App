@@ -14,6 +14,9 @@ public interface InvoiceDao extends CrudRepository<Invoice, Long>{
 	@Query("SELECT i FROM Invoice i JOIN FETCH i.client c JOIN FETCH i.items it JOIN FETCH it.product WHERE c = ?1")
 	public List<Invoice> findByClient(Client client);
 	
+	@Query("SELECT i FROM Invoice i WHERE client_id = ?1")
+	public List<Invoice> findByClientId(Long id);
+	
 	@Query("SELECT i FROM Invoice i JOIN FETCH i.client c JOIN FETCH i.items it JOIN FETCH it.product WHERE i.id=?1")
 	public Optional<Invoice> findById(Long id);
 }

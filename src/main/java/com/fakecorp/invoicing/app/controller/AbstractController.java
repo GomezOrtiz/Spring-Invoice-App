@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import com.fakecorp.invoicing.app.model.dao.UserDao;
 import com.fakecorp.invoicing.app.model.entity.User;
 
+/**
+ * Controlador abstracto para pasar a todas las vistas de la aplicación el usuario logueado
+ *
+ * @author David G. Ortiz
+ */
+
 @Controller
 public class AbstractController {
 	

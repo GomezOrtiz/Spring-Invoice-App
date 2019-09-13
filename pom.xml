@@ -82,6 +82,23 @@
 			<artifactId>cloudinary-http44</artifactId>
 			<version>1.23.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.github.database-rider</groupId>
+		    <artifactId>rider-spring</artifactId>
+		    <version>1.7.3</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>com.github.database-rider</groupId>
+		    <artifactId>rider-junit5</artifactId>
+		    <version>1.7.3</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		  <groupId>org.dbunit</groupId>
+		  <artifactId>dbunit</artifactId>
+		  <version>2.6.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

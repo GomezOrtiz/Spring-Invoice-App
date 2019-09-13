@@ -6,20 +6,20 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import com.fakecorp.invoicing.app.model.entity.Product;
 import com.fakecorp.invoicing.app.service.ProductService;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.spring.api.DBRider;
 
 @SpringBootTest
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DBRider
+@DataSet(value="dataset.xml", cleanBefore = true)
 public class ProductServiceImplTest {
 	
 	@Autowired 
@@ -29,13 +29,6 @@ public class ProductServiceImplTest {
 	public void shouldFindAllProducts() {
 		
 		// GIVEN 
-		@SuppressWarnings("serial")
-		List<Product> expected = new ArrayList<Product>() {{ 
-			add(new Product("Panasonic Pantalla LCD", 259990D)); 
-			add(new Product("Sony Camara digital DSC-W320B", 123490D));
-			add(new Product("Apple iPod shuffle", 1499990D));
-			add(new Product("Sony Notebook Z110", 37990D));
-			}};
 						
 		//WHEN
 		List<Product> result = productService.findAll();
@@ -43,8 +36,8 @@ public class ProductServiceImplTest {
 		//THEN
 		assertNotNull(result);
 		assertEquals(4, result.size(), "El número de productos debería ser el esperado");
-        assertEquals(expected.get(0).getName(), result.get(0).getName(), "El nombre del primer producto debería ser el esperado");
-        assertEquals(expected.get(expected.size() -1).getName(), result.get(result.size() -1).getName(), "El nombre del último producto debería ser el esperado");
+        assertEquals("Panasonic Pantalla LCD", result.get(0).getName(), "El nombre del primer producto debería ser el esperado");
+        assertEquals("Sony Notebook Z110", result.get(result.size() -1).getName(), "El nombre del último producto debería ser el esperado");
 	}
 	
 	@Test

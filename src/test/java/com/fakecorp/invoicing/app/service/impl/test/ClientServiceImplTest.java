@@ -5,47 +5,36 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import com.fakecorp.invoicing.app.model.entity.Client;
 import com.fakecorp.invoicing.app.service.ClientService;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.spring.api.DBRider;
 
 @SpringBootTest
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DBRider
+@DataSet(value="dataset.xml", cleanBefore = true, disableConstraints = true)
 public class ClientServiceImplTest {
-	
+    
 	@Autowired
 	private ClientService clientService;
 
 	@Test
-	public void shouldFindAllClients() {
+    public void shouldFindAllClients() {
 		
 		// GIVEN 
-		@SuppressWarnings("serial")
-		List<Client> expected = new ArrayList<Client>() {{ 
-			add(new Client("David", "Gómez", "dagor@gmail.com")); 
-			add(new Client("Lucía", "Astray", "lulas@gmail.com"));
-			add(new Client("Alfonso", "Cerezuela", "fons@gmail.com"));
-			add(new Client("Enrique", "Álvarez de Toledo", "henry@gmail.com"));
-			add(new Client("José Luis", "Avilés", "peplu@gmail.com"));
-			}};
 			
 		//WHEN
 		List<Client> result = clientService.findAll();
 		
-		
 		//THEN
 		assertNotNull(result, "Debería haber encontrado algún cliente");
 		assertEquals(5, result.size(), "El número de clientes debería ser el esperado");
-        assertEquals(expected.get(0).getName(), result.get(0).getName(), "El nombre del primer cliente debería ser el esperado");
-        assertEquals(expected.get(expected.size() -1).getName(), result.get(result.size() -1).getName(), "El nombre del último cliente debería ser el esperado");
 	}
 	
 	@Test
@@ -61,6 +50,8 @@ public class ClientServiceImplTest {
 		//THEN
 		assertNotNull(result, "Debería haber encontrado un cliente");
 		assertEquals(expected.getName(), result.getName(), "El nombre del cliente debería ser el esperado");
+		assertEquals(expected.getSurname(), result.getSurname(), "El apellido del cliente debería ser el esperado");
+		assertEquals(expected.getEmail(), result.getEmail(), "El email del cliente debería ser el esperado");
 	}
 	
 	@Test 

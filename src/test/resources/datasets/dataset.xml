@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<dataset>
+
+  <CLIENTS id="1" created_at="2019-08-06" email="dagor@gmail.com" name="David" surname="Gómez"/>
+  <CLIENTS id="2" created_at="2019-08-04" email="lulas@gmail.com" name="Lucía" surname="Astray"/>
+  <CLIENTS id="3" created_at="2019-07-15" email="fons@gmail.com" name="Alfonso" surname="Cerezuela"/>
+  <CLIENTS id="4" created_at="2019-07-15" email="henry@gmail.com" name="Enrique" surname="Álvarez de Toledo"/>
+  <CLIENTS id="5" created_at="2019-07-15" email="peplu@gmail.com" name="José Luis" surname="Avilés"/>
+  
+  <INVOICES id="1" created_at="2019-09-13" description="Factura equipos de oficina" client_id="1"/>
+  
+  <PRODUCTS id="1" created_at="2019-09-13" discontinued="false" name="Panasonic Pantalla LCD" price="259990.0"/>
+  <PRODUCTS id="2" created_at="2019-09-13" discontinued="false" name="Sony Camara digital DSC-W320B" price="123490.0"/>
+  <PRODUCTS id="3" created_at="2019-09-13" discontinued="true" name="Apple iPod shuffle" price="1499990.0"/>
+  <PRODUCTS id="4" created_at="2019-09-13" discontinued="false" name="Sony Notebook Z110" price="37990.0"/>
+  
+</dataset>

@@ -37,7 +37,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	@Transactional(readOnly=true)
 	public List<Invoice> findByClient(Long clientId) {
 		if(null != clientService.findById(clientId)) {
-			return invoiceDao.findByClient(clientService.findById(clientId));
+			return invoiceDao.findByClientId(clientId);
 		} else {
 			return null;
 		}

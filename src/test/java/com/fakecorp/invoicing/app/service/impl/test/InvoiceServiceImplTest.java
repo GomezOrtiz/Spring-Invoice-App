@@ -1,13 +1,12 @@
 package com.fakecorp.invoicing.app.service.impl.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.fakecorp.invoicing.app.model.entity.Invoice;
 import com.fakecorp.invoicing.app.service.ClientService;
 import com.fakecorp.invoicing.app.service.InvoiceService;
+import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.spring.api.DBRider;
 
 @SpringBootTest
+@DBRider
+@DataSet(value="dataset.xml", cleanBefore = true)
 class InvoiceServiceImplTest {
 	
 	@Autowired
@@ -31,17 +34,14 @@ class InvoiceServiceImplTest {
 		
 		//GIVEN
 		Long clientId = 1L;
-		Map<String, Object> expected = new HashMap<String, Object>();
-		expected.put("description", "Factura equipos de oficina");
-		expected.put("items", 2);
 		
 		//WHEN
 		List<Invoice> result = invoiceService.findByClient(clientId);
 		
 		//THEN
 		assertNotNull(result, "Debería encontrar facturas");
-		assertEquals(expected.get("description"), result.get(0).getDescription(), "La descripción debería ser la esperada");
-		assertEquals(expected.get("items"), result.get(0).getItems().size(), "La factura debería tener los items esperados");
+		assertThat(result).isNotEmpty();
+		assertEquals("Factura equipos de oficina", result.get(0).getDescription(), "La descripción debería ser la esperada");
 	}
 	
 	@Test
