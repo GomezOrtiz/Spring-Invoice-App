@@ -1,6 +1,7 @@
 package com.fakecorp.invoicing.app.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -58,6 +59,12 @@ public class UserService implements UserDetailsService {
 	@Transactional
 	public void create(User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userDao.save(user);
+	}
+	
+	@Transactional
+	public void saveLastConnection(User user) {
+		user.setLastConnection(new Date());
 		userDao.save(user);
 	}
 }

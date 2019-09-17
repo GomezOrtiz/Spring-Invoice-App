@@ -3,12 +3,10 @@ package com.fakecorp.invoicing.app.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +32,7 @@ import com.fakecorp.invoicing.app.utils.upload.CloudinaryUploader;
 
 @Controller
 @SessionAttributes("user")
-public class AuthController extends AbstractController {
+public class AuthController extends BaseController {
 	
 	private Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 	
@@ -47,17 +45,9 @@ public class AuthController extends AbstractController {
 	private static final String REDIRECT_TO_CLIENTS = "redirect:/clients";
 	
 	//Attributes
-	private static final String TITLE = "title";
 	private static final String USER = "user";
-	private static final String WARNING = "warning";
-	private static final String ERROR = "error";
-	private static final String SUCCESS = "success";
 	private static final String ROLES = "roles";
 	private static final String IMAGE = "image";
-	
-	//Messages
-	@Autowired
-	private MessageSource messages;
 	
 	//Beans
 	@Autowired
@@ -69,18 +59,18 @@ public class AuthController extends AbstractController {
 	
 	//Methods
 	@RequestMapping(value="/user/new", method=RequestMethod.GET)
-	public String signup(Model model, Locale locale) {
+	public String signup(Model model) {
 		
 		User user = new User();
 		
-		model.addAttribute(TITLE, messages.getMessage("forms.user.add.title", null, locale));
+		addTitle(model, "forms.user.add.title");
 		model.addAttribute(USER, user);
 		
 		return NEW_USER_FORM_VIEW;
 	}
 	
 	@RequestMapping(value="/user/new", method=RequestMethod.POST)
-	public String signup(@ModelAttribute("user") User user, @RequestParam("formRoles") List<String> roles, @RequestParam("file") MultipartFile file, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
+	public String signup(@ModelAttribute("user") User user, @RequestParam("formRoles") List<String> roles, @RequestParam("file") MultipartFile file, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
 		
 		userFormValidator.validate(user, result);
 		
@@ -100,41 +90,41 @@ public class AuthController extends AbstractController {
 		}
 		
 		if (result.hasErrors()) {
-			model.addAttribute(TITLE, messages.getMessage("forms.user.add.title", null, locale));
+			addTitle(redirect, "forms.user.add.title");
 			return NEW_USER_FORM_VIEW;
 		}
 		
 		userService.create(user);
 		status.setComplete();
-
-		redirect.addFlashAttribute(SUCCESS, messages.getMessage("forms.user.add.success", null, locale));
+		
+		addSuccessMessage(redirect, "forms.user.add.success");
 		
 		return REDIRECT_TO_CLIENTS;
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-	public String login(@RequestParam(value="logout", required=false) String logout, @RequestParam(value="error", required=false) String error, Model model, Principal principal, RedirectAttributes redirect, Locale locale) {
+	public String login(@RequestParam(value="logout", required=false) String logout, @RequestParam(value="error", required=false) String error, Model model, Principal principal, RedirectAttributes redirect) {
 		
 		if(null != principal) {
-			redirect.addFlashAttribute(WARNING, messages.getMessage("login.already.logged", null, locale));
+			addWarningMessage(redirect, "login.already.logged");
 			return REDIRECT_TO_CLIENTS;
 		}
 		
 		if(null != logout) {
-			model.addAttribute(SUCCESS, messages.getMessage("login.logout.success", null, locale));
+			addSuccessMessage(model, "login.logout.success");
 		}
 		
 		if(null != error) {
-			model.addAttribute(ERROR, messages.getMessage("login.error", null, locale));
+			addErrorMessage(model, "login.error");
 		}
 		
 		return LOGIN;
 	}
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
-	public String profile(Model model, Locale locale) {
+	public String profile(Model model) {
 		
-		model.addAttribute(TITLE, messages.getMessage("user.profile.title", null, locale));
+		addTitle(model, "user.profile.title");
 		
 		return PROFILE_VIEW;
 	}

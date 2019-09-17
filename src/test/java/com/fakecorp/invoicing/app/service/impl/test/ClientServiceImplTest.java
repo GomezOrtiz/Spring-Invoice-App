@@ -28,7 +28,7 @@ public class ClientServiceImplTest {
     public void shouldFindAllClients() {
 		
 		// GIVEN 
-			
+		
 		//WHEN
 		List<Client> result = clientService.findAll();
 		
@@ -144,9 +144,7 @@ public class ClientServiceImplTest {
 		assertEquals(4, result.size(), "El número de clientes debería ser el esperado");
         assertEquals("Enrique", beforeDeleted.getName(), "El nombre del cliente antes de ser borrado debería ser el esperado");
         assertEquals(expected.getName(), result.get(result.size() -1).getName(), "El nombre del último cliente tras la eliminación debería ser el esperado");
-        assertNull(clientService.findById(id), "No debería encontrar el cliente borrado");
-        
-        clientService.create(beforeDeleted);
+        assertNull(clientService.findById(id), "No debería encontrar el cliente borrado");        
 	}
 	
 	@Test 

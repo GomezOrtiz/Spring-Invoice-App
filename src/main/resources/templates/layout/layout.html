@@ -39,7 +39,7 @@
 						<i class="fas fa-sign-out-alt ml-3 mr-1 txt-white"></i><span class="txt-white" th:text="#{layout.header.logout}"></span>
 						<span class="txt-white" sec:authorize="isAuthenticated()" th:text="${' ( ' + {#authentication.name} + ' )'}"></span>
 					</a></li>	
-					<li class="nav-item ml-2"><a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/profile}" role="button">
+					<li th:if="${loggedInUser}" class="nav-item ml-2"><a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/profile}" role="button">
 						<img th:if="${loggedInUser}" th:src="${loggedInUser.image}" width="20px" height="20px" class="mr-1" /><span class="txt-white" th:text="#{layout.header.profile}"></span>
 					</a></li>
 				

@@ -1,10 +1,8 @@
 package com.fakecorp.invoicing.app.controller;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +30,7 @@ import com.fakecorp.invoicing.app.utils.pagination.Paginator;
 @SessionAttributes("client")
 @Controller
 @RequestMapping("/clients")
-public class ClientController extends AbstractController {
+public class ClientController extends BaseController {
 	
 	//Views
 	private static final String CLIENTS_LIST_VIEW = "client/clientList";
@@ -44,16 +42,9 @@ public class ClientController extends AbstractController {
 	private static final String REDIRECT_TO_LIST = "redirect:/clients";
 	
 	//Attributes
-	private static final String TITLE = "title";
 	private static final String CLIENT = "client";
 	private static final String CLIENTS = "clients";
-	private static final String SUCCESS = "success";
-	private static final String ERROR = "error";
 	private static final int MAX_RESULTS_PER_PAGE = 6;
-	
-	//Messages
-	@Autowired
-	private MessageSource messages;
 	
 	//Beans
 	@Autowired
@@ -66,7 +57,7 @@ public class ClientController extends AbstractController {
 	 * Método que muestra el listado de clientes (con buscador y paginación)
 	 */
 	@RequestMapping(value= {"/", "", "/list"}, method=RequestMethod.GET)
-	public String list(@RequestParam(name="search", required=false) String term, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect, Locale locale) {
+	public String list(@RequestParam(name="search", required=false) String term, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect) {
 		
 		Page<Client> clients = null;
 		
@@ -79,12 +70,12 @@ public class ClientController extends AbstractController {
 		Paginator<Client> paginator = new Paginator<>("/clients", clients);
 		
 		if(!clients.hasContent()) {
-			redirect.addFlashAttribute(TITLE, messages.getMessage("client.list.title", null, locale));
-			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.client.not.found", null, locale));
+			addTitle(redirect, "client.list.title");
+			addErrorMessage(redirect, "client.list.errors.client.not.found");
 			return REDIRECT_TO_LIST;
 		}
-						
-		model.addAttribute(TITLE, messages.getMessage("client.list.title", null, locale));
+		
+		addTitle(model, "client.list.title");
 		model.addAttribute(CLIENTS, clients);
 		model.addAttribute("page", paginator);
 		
@@ -95,15 +86,14 @@ public class ClientController extends AbstractController {
 	 * Método que muestra el detalle de un cliente
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public String detail(@PathVariable("id") Long id, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect, Locale locale) {
+	public String detail(@PathVariable("id") Long id, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect) {
 		
-		if(null != clientService.findById(id)) {
-			Client client = clientService.findById(id);
-			model.addAttribute(CLIENT, client);
-			model.addAttribute(TITLE, messages.getMessage("client.detail.title", null, locale));
+		if(isClient(id)) {
+			model.addAttribute(CLIENT, clientService.findById(id));
+			addTitle(model, "client.detail.title");
 			return CLIENT_DETAIL_VIEW;
 		} else {
-			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.not.found", null, locale));
+			addErrorMessage(redirect, "client.list.errors.not.found");
 			return REDIRECT_TO_LIST;
 		}		
 	}
@@ -112,11 +102,11 @@ public class ClientController extends AbstractController {
 	 * Método que muestra el formulario para añadir un nuevo cliente
 	 */
 	@RequestMapping(value="/new", method=RequestMethod.GET)
-	public String create(Map<String, Object> model, Locale locale) {
+	public String create(Map<String, Object> model) {
 		
 		Client client = new Client();
 		
-		model.put(TITLE, messages.getMessage("forms.client.add.title", null, locale));
+		addTitle(model, "forms.client.add.title");
 		model.put(CLIENT, client);
 		
 		return NEW_CLIENT_FORM_VIEW;
@@ -126,19 +116,19 @@ public class ClientController extends AbstractController {
 	 * Método que procesa el formulario para añadir un nuevo cliente
 	 */
 	@RequestMapping(value="/new", method=RequestMethod.POST)
-	public String create(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
+	public String create(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
 		
 		clientFormValidator.validate(client, result);
 		
 		if (result.hasErrors()) {
-			model.addAttribute(TITLE, messages.getMessage("forms.client.add.title", null, locale));
+			addTitle(model, "forms.client.add.title");
 			return NEW_CLIENT_FORM_VIEW;
 		}
 		
 		clientService.create(client);
 		status.setComplete();
-
-		redirect.addFlashAttribute(SUCCESS, messages.getMessage("client.list.add.success", null, locale));
+		
+		addSuccessMessage(redirect, "client.list.add.success");
 		
 		return REDIRECT_TO_LIST;
 		
@@ -148,15 +138,14 @@ public class ClientController extends AbstractController {
 	 * Método que muestra el formulario para editar un cliente
 	 */
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
-	public String update(@PathVariable("id") Long id, Map<String, Object> model, RedirectAttributes redirect, Locale locale) {
+	public String update(@PathVariable("id") Long id, Map<String, Object> model, RedirectAttributes redirect) {
 				
-		if(null != clientService.findById(id)) {
-			Client client = clientService.findById(id);
-			model.put(CLIENT, client);
-			model.put(TITLE, messages.getMessage("forms.client.edit.title", null, locale));
+		if(isClient(id)) {
+			model.put(CLIENT, clientService.findById(id));
+			addTitle(model, "forms.client.edit.title");
 			return EDIT_CLIENT_FORM_VIEW;
 		} else {
-			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.not.found", null, locale));
+			addErrorMessage(redirect, "client.list.errors.not.found");
 			return REDIRECT_TO_LIST;
 		}
 	}
@@ -165,19 +154,19 @@ public class ClientController extends AbstractController {
 	 * Método que procesa el formulario para editar un cliente
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String update(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
+	public String update(@ModelAttribute("client") Client client, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
 			
 		clientFormValidator.validate(client, result);
 
 		if (result.hasErrors()) {	
-			model.addAttribute(TITLE, messages.getMessage("forms.client.edit.title", null, locale));
+			addTitle(model, "forms.client.edit.title");
 			return EDIT_CLIENT_FORM_VIEW;
 		}
 		
 		clientService.update(client);
 		status.setComplete();
 		
-		redirect.addFlashAttribute(SUCCESS, messages.getMessage("client.list.edit.success", null, locale));
+		addSuccessMessage(redirect, "client.list.edit.success");
 		
 		return REDIRECT_TO_LIST;
 	}
@@ -186,15 +175,19 @@ public class ClientController extends AbstractController {
 	 * Método que elimina un cliente
 	 */
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
-	public String delete(@PathVariable("id") Long id, RedirectAttributes redirect, Locale locale) {
+	public String delete(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		
-		if(null != clientService.findById(id)) {
+		if(isClient(id)) {
 			clientService.delete(id);
-			redirect.addFlashAttribute(SUCCESS, messages.getMessage("client.list.delete.success", null, locale));
+			addSuccessMessage(redirect, "client.list.delete.success");
 		} else {
-			redirect.addFlashAttribute(ERROR, messages.getMessage("client.list.errors.not.found", null, locale));
+			addErrorMessage(redirect, "client.list.errors.not.found");
 		}
 		
 		return REDIRECT_TO_LIST;
+	}
+	
+	private boolean isClient(Long id) {
+		return null != clientService.findById(id);
 	}
 }

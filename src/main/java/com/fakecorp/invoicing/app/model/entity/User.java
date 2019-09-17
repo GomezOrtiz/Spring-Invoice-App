@@ -2,6 +2,7 @@ package com.fakecorp.invoicing.app.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -37,6 +40,10 @@ public class User implements Serializable {
 	private Boolean enabled;
 	
 	private String image;
+	
+	@Column(name = "last_connection")
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date lastConnection;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
@@ -100,6 +107,14 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 	
+	public Date getLastConnection() {
+		return lastConnection;
+	}
+
+	public void setLastConnection(Date lastConnection) {
+		this.lastConnection = lastConnection;
+	}
+
 	public List<Role> parseRoles(List<String> roles) {
 		
 		List<Role> newRoles = new ArrayList<Role>();

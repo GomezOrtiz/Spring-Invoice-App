@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fakecorp.invoicing.app.model.dao.InvoiceDao;
 import com.fakecorp.invoicing.app.model.entity.Invoice;
+import com.fakecorp.invoicing.app.model.entity.InvoiceItem;
+import com.fakecorp.invoicing.app.model.entity.Product;
 import com.fakecorp.invoicing.app.service.ClientService;
 import com.fakecorp.invoicing.app.service.InvoiceService;
+import com.fakecorp.invoicing.app.service.ProductService;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
@@ -20,6 +23,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 	
 	@Autowired
 	private ClientService clientService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@Override
 	@Transactional(readOnly=true)
@@ -45,6 +51,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 	
 	@Override
 	@Transactional
+	public void createWithItems(Invoice invoice, Long[] items, Integer[] amounts) {
+		for (int i = 0; i < items.length; i++) {
+			Product product = productService.findById(items[i]);
+			InvoiceItem item = new InvoiceItem();
+			item.setProduct(product);
+			item.setAmount(amounts[i]);
+			invoice.addItem(item);
+		}
+		create(invoice);
+	}
+	
+	@Override
+	@Transactional
 	public void create(Invoice invoice) {
 		invoice.setCreatedAt(new Date());
 		invoiceDao.save(invoice);
@@ -65,5 +84,4 @@ public class InvoiceServiceImpl implements InvoiceService {
 			invoiceDao.deleteById(id);
 		}
 	}
-
 }

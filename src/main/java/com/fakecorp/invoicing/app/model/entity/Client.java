@@ -21,8 +21,6 @@ import javax.persistence.TemporalType;
 @Table(name = "clients")
 public class Client implements Serializable {
 
-	private static final long serialVersionUID = 7703021926990001486L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -114,4 +112,5 @@ public class Client implements Serializable {
 		invoices.add(invoice);
 	}
 	
+	private static final long serialVersionUID = 7703021926990001486L;
 }

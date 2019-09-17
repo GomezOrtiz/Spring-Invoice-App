@@ -8,14 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fakecorp.invoicing.app.model.dao.UserDao;
 import com.fakecorp.invoicing.app.model.entity.User;
+import com.fakecorp.invoicing.app.utils.auth.AuthUtils;
 
 /**
  * Controlador para manejar los errores
@@ -41,7 +39,7 @@ public class ErrorHandlingController implements ErrorController {
 	
 	//Beans
 	@Autowired
-	private UserDao userDao;
+	private AuthUtils authUtils;
 	
 	//Methods
     @RequestMapping("")
@@ -90,12 +88,7 @@ public class ErrorHandlingController implements ErrorController {
 	
 	@ModelAttribute("loggedInUser")
 	public User getAuthenticatedUser() {
-		
-		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
-			UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		    return userDao.findByUsername(principal.getUsername());
-		}
-		return null;
+		return authUtils.getLoggedInUser();
 	}
 
 }

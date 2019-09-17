@@ -23,8 +23,6 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="invoices")
 public class Invoice implements Serializable {
-
-	private static final long serialVersionUID = -8504647061495176387L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +37,11 @@ public class Invoice implements Serializable {
 	private Date createdAt;
 	
 	public Invoice() {
+		items = new ArrayList<InvoiceItem>();
+	}
+	
+	public Invoice(Client client) {
+		setClient(client);
 		items = new ArrayList<InvoiceItem>();
 	}
 
@@ -115,5 +118,7 @@ public class Invoice implements Serializable {
 		
 		return total;
 	}	
+	
+	private static final long serialVersionUID = -8504647061495176387L;
 
 }

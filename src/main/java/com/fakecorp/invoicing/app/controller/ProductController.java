@@ -1,10 +1,8 @@
 package com.fakecorp.invoicing.app.controller;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +30,7 @@ import com.fakecorp.invoicing.app.utils.pagination.Paginator;
 @SessionAttributes("product")
 @Controller
 @RequestMapping("/products")
-public class ProductController extends AbstractController {
+public class ProductController extends BaseController {
 		
 	//Views
 	private static final String PRODUCTS_LIST_VIEW = "product/productList";
@@ -43,16 +41,9 @@ public class ProductController extends AbstractController {
 	private static final String REDIRECT_TO_LIST = "redirect:/products";
 	
 	//Attributes
-	private static final String TITLE = "title";
 	private static final String PRODUCT = "product";
 	private static final String PRODUCTS = "products";
-	private static final String SUCCESS = "success";
-	private static final String ERROR = "error";
 	private static final int MAX_RESULTS_PER_PAGE = 6;
-	
-	//Messages
-	@Autowired
-	private MessageSource messages;
 	
 	//Beans
 	@Autowired
@@ -65,7 +56,7 @@ public class ProductController extends AbstractController {
 	 * Método que muestra el listado de clientes (con buscador y paginación)
 	 */
 	@RequestMapping(value= {"/", "", "/list"}, method=RequestMethod.GET)
-	public String list(@RequestParam(name="search", required=false) String term, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect, Locale locale) {
+	public String list(@RequestParam(name="search", required=false) String term, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect) {
 		
 		Page<Product> products = null;
 		
@@ -78,11 +69,11 @@ public class ProductController extends AbstractController {
 		Paginator<Product> paginator = new Paginator<>("/products", products);
 		
 		if(!products.hasContent()) {
-			redirect.addFlashAttribute(ERROR, messages.getMessage("product.list.errors.product.not.found", null, locale));
+			addErrorMessage(redirect, "product.list.errors.product.not.found");
 			return REDIRECT_TO_LIST;
 		}
-				
-		model.addAttribute(TITLE, messages.getMessage("product.list.title", null, locale));
+		
+		addTitle(model, "product.list.title");
 		model.addAttribute(PRODUCTS, products);
 		model.addAttribute("page", paginator);
 		
@@ -93,11 +84,11 @@ public class ProductController extends AbstractController {
 	 * Método que muestra el formulario para añadir un nuevo producto
 	 */
 	@RequestMapping(value="/new", method=RequestMethod.GET)
-	public String create(Map<String, Object> model, Locale locale) {
+	public String create(Map<String, Object> model) {
 		
 		Product product = new Product();
 		
-		model.put(TITLE, messages.getMessage("forms.product.add.title", null, locale));
+		addTitle(model, "forms.product.add.title");
 		model.put(PRODUCT, product);
 		
 		return NEW_PRODUCT_FORM_VIEW;
@@ -107,19 +98,19 @@ public class ProductController extends AbstractController {
 	 * Método que procesa el formulario para añadir un nuevo producto
 	 */
 	@RequestMapping(value="/new", method=RequestMethod.POST)
-	public String create(@ModelAttribute("product") Product product, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
+	public String create(@ModelAttribute("product") Product product, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
 		
 		productFormValidator.validate(product, result);
 
 		if (result.hasErrors()) {
-			model.addAttribute(TITLE, messages.getMessage("forms.product.add.title", null, locale));
+			addTitle(model, "forms.product.add.title");
 			return NEW_PRODUCT_FORM_VIEW;
 		}
 		
 		productService.create(product);
 		status.setComplete();
-
-		redirect.addFlashAttribute(SUCCESS, messages.getMessage("product.list.add.success", null, locale));
+		
+		addSuccessMessage(redirect, "product.list.add.success");
 		
 		return REDIRECT_TO_LIST;
 		
@@ -129,15 +120,14 @@ public class ProductController extends AbstractController {
 	 * Método que muestra el formulario para editar un producto
 	 */
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
-	public String update(@PathVariable("id") Long id, Map<String, Object> model, RedirectAttributes redirect, Locale locale) {
+	public String update(@PathVariable("id") Long id, Map<String, Object> model, RedirectAttributes redirect) {
 				
-		if(null != productService.findById(id)) {
-			Product product = productService.findById(id);
-			model.put(PRODUCT, product);
-			model.put(TITLE, messages.getMessage("forms.product.edit.title", null, locale));
+		if(isProduct(id)) {
+			addTitle(model, "forms.product.edit.title");
+			model.put(PRODUCT, productService.findById(id));
 			return EDIT_PRODUCT_FORM_VIEW;
 		} else {
-			redirect.addFlashAttribute(ERROR, messages.getMessage("product.list.errors.not.found", null, locale));
+			addErrorMessage(redirect, "product.list.errors.not.found");
 			return REDIRECT_TO_LIST;
 		}
 	}
@@ -146,19 +136,19 @@ public class ProductController extends AbstractController {
 	 * Método que procesa el formulario para editar un producto
 	 */
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String update(@ModelAttribute("product") Product product, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status, Locale locale) {
+	public String update(@ModelAttribute("product") Product product, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
 			
 		productFormValidator.validate(product, result);
 
 		if (result.hasErrors()) {	
-			model.addAttribute(TITLE, messages.getMessage("forms.product.edit.title", null, locale));
+			addTitle(model, "forms.product.edit.title");
 			return EDIT_PRODUCT_FORM_VIEW;
 		}
 		
 		productService.update(product);
 		status.setComplete();
 		
-		redirect.addFlashAttribute(SUCCESS, messages.getMessage("product.list.edit.success", null, locale));
+		addSuccessMessage(redirect, "product.list.edit.success");
 		
 		return REDIRECT_TO_LIST;
 	}
@@ -167,16 +157,19 @@ public class ProductController extends AbstractController {
 	 * Método que cambia el estado de discontinuidad de un producto
 	 */
 	@RequestMapping(value="/discontinue/{id}", method=RequestMethod.GET)
-	public String delete(@PathVariable("id") Long id, RedirectAttributes redirect, Locale locale) {
+	public String delete(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		
 		try {		
 			productService.changeDiscontinued(id);
-			redirect.addFlashAttribute(SUCCESS, messages.getMessage("product.list.delete.success", null, locale));
+			addSuccessMessage(redirect, "product.list.delete.success");
 		} catch(Exception e) {
-			redirect.addFlashAttribute(ERROR, messages.getMessage("product.list.errors.not.found", null, locale));
+			addErrorMessage(redirect, "product.list.errors.not.found");
 		}
 		
 		return REDIRECT_TO_LIST;
 	}
 	
+	private boolean isProduct(Long id) {
+		return null != productService.findById(id);
+	}
 }
