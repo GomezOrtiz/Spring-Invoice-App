@@ -15,8 +15,6 @@ import javax.persistence.Table;
 @Table(name="invoice_items")
 public class InvoiceItem implements Serializable {
 	
-	private static final long serialVersionUID = -2906935108805575026L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -66,4 +64,6 @@ public class InvoiceItem implements Serializable {
 	public Double getTotal() {
 		return amount.doubleValue() * product.getPrice();
 	}
+	
+	private static final long serialVersionUID = -2906935108805575026L;
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.utils.ObjectUtils;
-import com.fakecorp.invoicing.app.CloudinaryConfig;
+import com.fakecorp.invoicing.CloudinaryConfig;
 
 @Component
 public class CloudinaryUploader {

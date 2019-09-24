@@ -97,7 +97,7 @@ public class AuthController extends BaseController {
 		userService.create(user);
 		status.setComplete();
 		
-		addSuccessMessage(redirect, "forms.user.add.success");
+		addSuccessMessage(redirect, "forms.user.add.success", user.getUsername());
 		
 		return REDIRECT_TO_CLIENTS;
 	}

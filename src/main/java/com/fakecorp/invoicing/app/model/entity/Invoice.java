@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="invoices")
 public class Invoice implements Serializable {
@@ -50,6 +52,7 @@ public class Invoice implements Serializable {
 		createdAt = new Date();
 	}
 	
+	@JsonManagedReference
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Client client;
 	

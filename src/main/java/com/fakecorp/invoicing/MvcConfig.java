@@ -1,4 +1,4 @@
-package com.fakecorp.invoicing.app;
+package com.fakecorp.invoicing;
 
 import java.util.Locale;
 

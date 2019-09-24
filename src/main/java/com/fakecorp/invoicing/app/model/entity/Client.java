@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
@@ -39,6 +41,7 @@ public class Client implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	private Date updatedAt;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="client", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<Invoice> invoices;
 	
@@ -110,6 +113,10 @@ public class Client implements Serializable {
 	
 	public void addInvoice(Invoice invoice) {
 		invoices.add(invoice);
+	}
+	
+	public String getFullName() {
+		return name + " " + surname;
 	}
 	
 	private static final long serialVersionUID = 7703021926990001486L;

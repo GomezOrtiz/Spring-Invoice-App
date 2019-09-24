@@ -1,6 +1,5 @@
 package com.fakecorp.invoicing.app.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +72,7 @@ public class InvoiceController extends BaseController {
 			model.addAttribute(INVOICE, invoiceService.findById(id));
 			return INVOICE_DETAIL_VIEW;
 		} else {
-			addErrorMessage(redirect, "invoice.detail.errors.not.found".concat(" " + id));
+			addErrorMessage(redirect, "invoice.detail.errors.not.found", id.toString());
 			return BASE_REDIRECT_TO_CLIENT;
 		}		
 	}
@@ -101,7 +100,7 @@ public class InvoiceController extends BaseController {
 			model.put(INVOICE, new Invoice(clientService.findById(clientId)));
 			return NEW_INVOICE_FORM_VIEW;
 		} else {
-			addErrorMessage(redirect, "client.detail.errors.not.found");
+			addErrorMessage(redirect, "client.detail.errors.not.found", clientId.toString());
 			return BASE_REDIRECT_TO_CLIENT;
 		}
 	}
@@ -147,10 +146,10 @@ public class InvoiceController extends BaseController {
 		
 		if (isInvoice(id) && isClient(client.getId())) {
 			invoiceService.delete(id);
-			addSuccessMessage(redirect, "invoice.delete.success");
+			addSuccessMessage(redirect, "invoice.delete.success", id.toString());
 			return BASE_REDIRECT_TO_CLIENT + client.getId();
 		} else {
-			addErrorMessage(redirect, "invoice.delete.error.not.found");
+			addErrorMessage(redirect, "invoice.delete.error.not.found", id.toString());
 			return BASE_REDIRECT_TO_CLIENT;
 		}
 				
@@ -169,14 +168,7 @@ public class InvoiceController extends BaseController {
 	 */
 	@RequestMapping(value="/load-clients/{term}", produces={"application/json"}, method=RequestMethod.GET)
 	public @ResponseBody List<Client> loadClients(@PathVariable("term") String term) {	
-		
-		List<Client> clients = clientService.findByName(term);
-		
-		for (Client client : clients) {
-			client.setInvoices(new ArrayList<Invoice>());
-		}
-		
-		return clients;
+		return clientService.findByName(term);
 	}
 	
 	private boolean isClient(Long id) {

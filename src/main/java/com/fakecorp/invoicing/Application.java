@@ -1,4 +1,4 @@
-package com.fakecorp.invoicing.app;
+package com.fakecorp.invoicing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -43,64 +43,63 @@ public class BaseController {
 	}
 	
 	//Base Methods
-	protected void addMessage(Model model, String attributeName, String messageProperty) {
-		model.addAttribute(attributeName, messages.getMessage(messageProperty, null, LocaleContextHolder.getLocale()));
+	protected void addMessage(Model model, String attributeName, String messageProperty, Object... args) {
+		model.addAttribute(attributeName, messages.getMessage(messageProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addMessage(Map<String,Object> model, String attributeName, String messageProperty) {
-		model.put(attributeName, messages.getMessage(messageProperty, null, LocaleContextHolder.getLocale()));
+	protected void addMessage(Map<String,Object> model, String attributeName, String messageProperty, Object... args) {
+		model.put(attributeName, messages.getMessage(messageProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addMessage(RedirectAttributes redirect, String attributeName, String messageProperty) {
-		redirect.addFlashAttribute(attributeName, messages.getMessage(messageProperty, null, LocaleContextHolder.getLocale()));
+	protected void addMessage(RedirectAttributes redirect, String attributeName, String messageProperty, Object... args) {
+		redirect.addFlashAttribute(attributeName, messages.getMessage(messageProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addTitle(Model model, String titleProperty) {
-		model.addAttribute(TITLE, messages.getMessage(titleProperty, null, LocaleContextHolder.getLocale()));
+	protected void addTitle(Model model, String titleProperty, Object... args) {
+		model.addAttribute(TITLE, messages.getMessage(titleProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addTitle(Map<String,Object> model, String titleProperty) {
-		model.put(TITLE, messages.getMessage(titleProperty, null, LocaleContextHolder.getLocale()));
+	protected void addTitle(Map<String,Object> model, String titleProperty, Object... args) {
+		model.put(TITLE, messages.getMessage(titleProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addTitle(RedirectAttributes redirect, String titleProperty) {
-		redirect.addFlashAttribute(TITLE, messages.getMessage(titleProperty, null, LocaleContextHolder.getLocale()));
+	protected void addTitle(RedirectAttributes redirect, String titleProperty, Object... args) {
+		redirect.addFlashAttribute(TITLE, messages.getMessage(titleProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addErrorMessage(Model model, String errorProperty) {
-		model.addAttribute(ERROR, messages.getMessage(errorProperty, null, LocaleContextHolder.getLocale()));
+	protected void addErrorMessage(Model model, String errorProperty, Object... args) {
+		model.addAttribute(ERROR, messages.getMessage(errorProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addErrorMessage(Map<String,Object> model, String errorProperty) {
-		model.put(ERROR, messages.getMessage(errorProperty, null, LocaleContextHolder.getLocale()));
+	protected void addErrorMessage(Map<String,Object> model, String errorProperty, Object... args) {
+		model.put(ERROR, messages.getMessage(errorProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addErrorMessage(RedirectAttributes redirect, String errorProperty) {
-		redirect.addFlashAttribute(ERROR, messages.getMessage(errorProperty, null, LocaleContextHolder.getLocale()));
+	protected void addErrorMessage(RedirectAttributes redirect, String errorProperty, Object... args) {
+		redirect.addFlashAttribute(ERROR, messages.getMessage(errorProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addSuccessMessage(Model model, String errorProperty) {
-		model.addAttribute(SUCCESS, messages.getMessage(errorProperty, null, LocaleContextHolder.getLocale()));
+	protected void addSuccessMessage(Model model, String errorProperty, Object... args) {
+		model.addAttribute(SUCCESS, messages.getMessage(errorProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addSuccessMessage(Map<String,Object> model, String errorProperty) {
-		model.put(SUCCESS, messages.getMessage(errorProperty, null, LocaleContextHolder.getLocale()));
+	protected void addSuccessMessage(Map<String,Object> model, String errorProperty, Object... args) {
+		model.put(SUCCESS, messages.getMessage(errorProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addSuccessMessage(RedirectAttributes redirect, String errorProperty) {
-		redirect.addFlashAttribute(SUCCESS, messages.getMessage(errorProperty, null, LocaleContextHolder.getLocale()));
+	protected void addSuccessMessage(RedirectAttributes redirect, String errorProperty, Object... args) {
+		redirect.addFlashAttribute(SUCCESS, messages.getMessage(errorProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addWarningMessage(Model model, String warningProperty) {
-		model.addAttribute(WARNING, messages.getMessage(warningProperty, null, LocaleContextHolder.getLocale()));
+	protected void addWarningMessage(Model model, String warningProperty, Object... args) {
+		model.addAttribute(WARNING, messages.getMessage(warningProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addWarningMessage(Map<String,Object> model, String warningProperty) {
-		model.put(WARNING, messages.getMessage(warningProperty, null, LocaleContextHolder.getLocale()));
+	protected void addWarningMessage(Map<String,Object> model, String warningProperty, Object... args) {
+		model.put(WARNING, messages.getMessage(warningProperty, args, null, LocaleContextHolder.getLocale()));
 	}
 	
-	protected void addWarningMessage(RedirectAttributes redirect, String warningProperty) {
-		redirect.addFlashAttribute(WARNING, messages.getMessage(warningProperty, null, LocaleContextHolder.getLocale()));
+	protected void addWarningMessage(RedirectAttributes redirect, String warningProperty, Object... args) {
+		redirect.addFlashAttribute(WARNING, messages.getMessage(warningProperty, args, null, LocaleContextHolder.getLocale()));
 	}
-
 }

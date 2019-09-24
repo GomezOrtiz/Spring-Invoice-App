@@ -110,7 +110,7 @@ public class ProductController extends BaseController {
 		productService.create(product);
 		status.setComplete();
 		
-		addSuccessMessage(redirect, "product.list.add.success");
+		addSuccessMessage(redirect, "product.list.add.success", product.getName());
 		
 		return REDIRECT_TO_LIST;
 		
@@ -127,7 +127,7 @@ public class ProductController extends BaseController {
 			model.put(PRODUCT, productService.findById(id));
 			return EDIT_PRODUCT_FORM_VIEW;
 		} else {
-			addErrorMessage(redirect, "product.list.errors.not.found");
+			addErrorMessage(redirect, "product.list.errors.not.found", id.toString());
 			return REDIRECT_TO_LIST;
 		}
 	}
@@ -148,7 +148,7 @@ public class ProductController extends BaseController {
 		productService.update(product);
 		status.setComplete();
 		
-		addSuccessMessage(redirect, "product.list.edit.success");
+		addSuccessMessage(redirect, "product.list.edit.success", product.getName());
 		
 		return REDIRECT_TO_LIST;
 	}
@@ -161,7 +161,7 @@ public class ProductController extends BaseController {
 		
 		try {		
 			productService.changeDiscontinued(id);
-			addSuccessMessage(redirect, "product.list.delete.success");
+			addSuccessMessage(redirect, "product.list.delete.success", productService.findById(id).getName());
 		} catch(Exception e) {
 			addErrorMessage(redirect, "product.list.errors.not.found");
 		}

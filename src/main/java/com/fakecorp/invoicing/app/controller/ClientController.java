@@ -86,14 +86,14 @@ public class ClientController extends BaseController {
 	 * Método que muestra el detalle de un cliente
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public String detail(@PathVariable("id") Long id, @RequestParam(name="page", defaultValue="0") int page, Model model, RedirectAttributes redirect) {
+	public String detail(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
 		
 		if(isClient(id)) {
 			model.addAttribute(CLIENT, clientService.findById(id));
 			addTitle(model, "client.detail.title");
 			return CLIENT_DETAIL_VIEW;
 		} else {
-			addErrorMessage(redirect, "client.list.errors.not.found");
+			addErrorMessage(redirect, "client.list.errors.not.found", id.toString());
 			return REDIRECT_TO_LIST;
 		}		
 	}
@@ -128,7 +128,7 @@ public class ClientController extends BaseController {
 		clientService.create(client);
 		status.setComplete();
 		
-		addSuccessMessage(redirect, "client.list.add.success");
+		addSuccessMessage(redirect, "client.list.add.success", client.getFullName());
 		
 		return REDIRECT_TO_LIST;
 		
@@ -166,7 +166,7 @@ public class ClientController extends BaseController {
 		clientService.update(client);
 		status.setComplete();
 		
-		addSuccessMessage(redirect, "client.list.edit.success");
+		addSuccessMessage(redirect, "client.list.edit.success", client.getFullName());
 		
 		return REDIRECT_TO_LIST;
 	}

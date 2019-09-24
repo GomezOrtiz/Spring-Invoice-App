@@ -17,8 +17,6 @@ import javax.persistence.TemporalType;
 @Table(name = "products")
 public class Product implements Serializable {
 	
-	private static final long serialVersionUID = 6482360997899102103L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -99,5 +97,6 @@ public class Product implements Serializable {
 	public boolean isDiscontinued() {
 		return discontinued;
 	}
-
+	
+	private static final long serialVersionUID = 6482360997899102103L;
 }

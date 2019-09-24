@@ -1,4 +1,4 @@
-package com.fakecorp.invoicing.app;
+package com.fakecorp.invoicing;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.authorizeRequests()
-		.antMatchers("/", "/css/**", "/js/**", "/img/**", "/locale", "/error/**").permitAll()
+		.antMatchers("/", "/css/**", "/js/**", "/img/**", "/locale", "/error/**", "/api/**").permitAll()
 		.antMatchers("/profile").hasAnyRole("USER")
 		.antMatchers("/clients").hasAnyRole("USER")
 		.antMatchers("/products").hasAnyRole("USER")
